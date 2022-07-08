@@ -16,19 +16,16 @@ def _create_trial_shool(
     :returns: Counter The number of students with each label.
     """
 
-    school = Counter()
-    for s in range(population):
-        student = (
-            choices(
-                population=["sped ", "gen_ed "],
-                weights=[prob_sped, 1 - prob_sped],
-            )[0]
-            + choices(
-                population=["low", "high"],
-                weights=[prob_low_ses, 1 - prob_low_ses],
-            )[0]
-        )
-        school.update([student])
+    prob_gen_ed = 1 - prob_sped
+    prob_high_ses = 1 - prob_low_ses
+    labels = ["sped low", "sped high", "gen_ed low", "gen_ed high"]
+    probabilities = [
+        round(prob_sped * prob_low_ses, 3),
+        round(prob_sped * prob_high_ses, 3),
+        round(prob_gen_ed * prob_low_ses, 3),
+        round(prob_gen_ed * prob_high_ses, 3),
+    ]
+    school = Counter(choices(population=labels, weights=probabilities, k=population))
     return school
 
 
@@ -64,6 +61,7 @@ def run_trials(
 ) -> dict[str, float]:
     """Run the trials to simulate a school with a given probabilities of students being
     labeled sped and low ses.
+
     :trials: int The number of trials to run.
     :population: int The number of students at the school.
     :prob_sped: float The probability that a student is labeled as sped.
