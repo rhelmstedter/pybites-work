@@ -39,15 +39,18 @@ def _update_pr_counts(
 ) -> None:
     """Upates the number of schools that have proportional representation.
 
-    :pr_counter: Counter the proportinal representation counter to be updated.
-    :percent_low_ses_overal: float The percentage of students at the school who are low income.
-    :percent_low_ses_in_sped: float The percentage of students who are both low income and sped.
-    :returns: Counter The updated proportional_representation counter.
+    :pr_counter: Counter The proportional representation counter to be updated.
+    :percent_low_ses_overal: float The percentage of students at the school who are
+        labeled low income.
+    :percent_low_ses_in_sped: float The percentage of students who are labeled both as
+        low income and sped.
+    :returns: Counter The proportional representation counter updated if the school has
+        proportional representation.
     """
 
     if percent_low_ses_overall == percent_low_ses_in_sped:
         pr_counter.update(["exact"])
-    elif 0 < percent_low_ses_overall - percent_low_ses_in_sped <= 0.02:
+    if 0 <= percent_low_ses_overall - percent_low_ses_in_sped <= 0.02:
         pr_counter.update(["within range"])
     return pr_counter
 
@@ -58,14 +61,15 @@ def run_trials(
     prob_sped: float,
     prob_low_ses: float,
 ) -> dict[str, float]:
-    """Run the trials to simulate a school with a given probabilities of students being labeled
-    sped and low ses.
+    """Run the trials to simulate a school with a given probabilities of students being
+    labeled sped and low ses.
 
     :trials: int The number of trials to run.
-    :population: int The number of students at the school
+    :population: int The number of students at the school.
     :prob_sped: float The probability that a student is labeled as sped.
-    :prob_low_ses: float The probability that a student labeled as low ses.
-    :returns: dict The percentages of schools that have proportional representation across all trials.
+    :prob_low_ses: float The probability that a student is labeled as low ses.
+    :returns: dict Contains the percentages of schools that have proportional
+        representation across all trials.
     """
     proportional_representation = Counter()
     for i in track(range(trials), f"Running {trials:,} trials"):
@@ -85,7 +89,7 @@ def run_trials(
 
 if __name__ == "__main__":
     seed(1)
-    trials = 100000
+    trials = 1000
     results = run_trials(trials, 600, 0.1666, 0.35)
     print(
         f"The probability of having exact proportional representation in {trials:,} trials is: {results.get('exact', 0.0)}%"
