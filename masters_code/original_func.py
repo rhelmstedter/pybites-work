@@ -47,5 +47,5 @@ def run_trials(trials: int, print_results: bool = True):
 
 
 if __name__ == "__main__":
-    trials = 1000
+    trials = 10000
     results = run_trials(trials)

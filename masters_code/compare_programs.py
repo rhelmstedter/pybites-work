@@ -22,7 +22,7 @@ def timer(func):
         value = func(*args, **kwargs)
         toc = perf_counter()
         elapsed_time = toc - tic
-        print(f"Elapsed time for: {elapsed_time:0.4f} seconds")
+        print(f"Elapsed time for: {elapsed_time:0.4f} seconds", end="\n\n")
         return elapsed_time, value
 
     return wrapper_timer
@@ -32,17 +32,22 @@ original_run_trials = timer(original_run_trials)
 refactored_run_trials = timer(refactored_run_trials)
 improved_run_trials = timer(improved_run_trials)
 
+
 if __name__ == "__main__":
     seed(1)
-    trials = 100_000
+    trials = 10000
+    population = 600
+    probability_sped = 0.166
+    probability_low_ses = 0.35
+
     print("Running function: [bold]original_run_trials[/bold]")
     original_time, original_results = original_run_trials(trials)
 
     print("Running function: [bold]refactored_run_trials[/bold]")
     refactored_time, refactored_results = refactored_run_trials(
-        trials, 600, 0.166, 0.35
+        trials, population, probability_sped, probability_low_ses
     )
     print("Running function: [bold]improved_run_trials[/bold]")
     improved_time, improved_results = improved_run_trials(
-        trials, 600, 0.166, 0.35
+        trials, population, probability_sped, probability_low_ses
     )
