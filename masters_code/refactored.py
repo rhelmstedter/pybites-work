@@ -72,7 +72,8 @@ def run_trials(
         representation across all trials.
     """
     proportional_representation = Counter()
-    for i in track(range(trials), f"With {trials:,} trials"):
+    # for _ in track(range(trials), f"With {trials:,} trials"):
+    for _ in range(trials):
         school = _create_trial_shool(population, prob_sped, prob_low_ses)
         count_sped = school["sped low"] + school["sped high"]
         count_low_ses = school["sped low"] + school["gen_ed low"]

@@ -2,9 +2,9 @@ import functools
 from random import seed
 from time import perf_counter
 
-from rich import print
 from rich.console import Console
-from rich.table import Column, Table
+from rich.table import Table
+from rich.status import Status
 
 from original_func import run_trials as original_run_trials
 from refactored import run_trials as refactored_run_trials
@@ -42,30 +42,27 @@ def comparison_runner(funcs: dict, trials: int, trial_params: dict) -> dict[floa
     comparison_results = {"Trials": trials}
     for i, (func_name, func) in enumerate(funcs.items()):
         func = timer(func)
-        print(f"\n[bold]{func_name}[/bold] run_trials.")
-        if i == 0:
-            elapsed_time, _ = func(trials, trial_params["print_results"])
-        else:
-            elapsed_time, _ = func(trials, **trial_params)
+        elapsed_time, _ = func(trials, **trial_params)
         comparison_results[func_name] = elapsed_time
     return comparison_results
 
 
 def display_table(comparison_results: list[dict]):
     console = Console()
-    table = Table(title="Comparison results")
+    table = Table(title="Comparison Results (in seconds)")
     for column in comparison_results[0].keys():
         table.add_column(column, justify="center")
 
     for results in comparison_results:
         refactored_ratio = round(results["Original"] / results["Refactored"], 1)
         improved_ratio = round(results["Original"] / results["Improved"], 1)
-        max_width = len(str(trial_sets[-1]))
+        last_trial_width = len(str(trial_sets[-1]))
+        longest_time_width = len(str(comparison_results[-1]["Original"]))
         table.add_row(
-            f"{results['Trials']:{max_width}d}",
-            f"{results['Original']}",
-            f"{results['Refactored']} [green]({refactored_ratio}x)[/green]",
-            f"{results['Improved']} [green]({improved_ratio}x)[/green]",
+            f"{results['Trials']:{last_trial_width}d}",
+            f"{results['Original']:0{longest_time_width}.4f}",
+            f"{results['Refactored']:0{longest_time_width}.4f} [green]({refactored_ratio}x)[/green]",
+            f"{results['Improved']:0{longest_time_width}.4f} [green]({improved_ratio}x)[/green]",
         )
     console.print(table)
 
@@ -76,7 +73,7 @@ if __name__ == "__main__":
         "Refactored": refactored_run_trials,
         "Improved": improved_run_trials,
     }
-    trial_sets = [1, 10, 100, 1000, 10000]
+    trial_sets = [10**n for n in range(6)]
     trial_params = {
         "population": 600,
         "prob_sped": 0.166,
@@ -85,6 +82,7 @@ if __name__ == "__main__":
     }
     comparison_results = []
     for trials in trial_sets:
-        results = comparison_runner(funcs, trials, trial_params)
-        comparison_results.append(results)
+        with Status(f"Running comparisons with {trials:,} trials..."):
+            results = comparison_runner(funcs, trials, trial_params)
+            comparison_results.append(results)
     display_table(comparison_results)

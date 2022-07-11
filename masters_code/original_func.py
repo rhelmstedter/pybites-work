@@ -1,19 +1,20 @@
 import numpy as np
-from rich.progress import track
+# from rich.progress import track
 
 
-def run_trials(trials: int, print_results: bool = True):
+def run_trials(trials: int, population: int, prob_sped: float, prob_low_ses: float, print_results: bool = True):
     """Original version of of script"""
     np.random.seed(1)
     n = 1
-    p_sped = 1 / 6
-    p_lowin = 7 / 20
+    p_sped = prob_sped
+    p_lowin = prob_low_ses
     runs = trials
     pop = 600
     PR_exact = 0
     PR_twoper = 0
 
-    for i in track(range(runs), f"With {trials:,} trials"):
+    # for i in track(range(runs), f"With {trials:,} trials"):
+    for i in range(runs):
         sped = 0
         lowin = 0
         both = 0
