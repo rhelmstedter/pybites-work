@@ -1,5 +1,4 @@
 import numpy as np
-# from rich.progress import track
 
 
 def run_trials(trials: int, population: int, prob_sped: float, prob_low_ses: float, print_results: bool = True):
@@ -13,7 +12,6 @@ def run_trials(trials: int, population: int, prob_sped: float, prob_low_ses: flo
     PR_exact = 0
     PR_twoper = 0
 
-    # for i in track(range(runs), f"With {trials:,} trials"):
     for i in range(runs):
         sped = 0
         lowin = 0
@@ -49,4 +47,4 @@ def run_trials(trials: int, population: int, prob_sped: float, prob_low_ses: flo
 
 if __name__ == "__main__":
     trials = 10000
-    results = run_trials(trials)
+    results = run_trials(trials, 0.166, 0.35)
