@@ -5,8 +5,8 @@ from random import choices, seed
 def _create_trial_school(
     population: int, prob_sped: float, prob_low_ses: float
 ) -> Counter:
-    """Creates a counter of students with one of four possible labels: 'sped low',
-    'sped high', 'gen_ed low' 'gen_ed high'.
+    """Creates a counter of students with one of four possible labels: ['sped low',
+    'sped high', 'gen_ed low' 'gen_ed high'].
 
     :population: int The number of students in the school.
     :prob_sped: float The probability that a student is labeled as sped.
@@ -23,8 +23,7 @@ def _create_trial_school(
         round(prob_gen_ed * prob_low_ses, 3),
         round(prob_gen_ed * prob_high_ses, 3),
     ]
-    school = Counter(choices(population=labels, weights=probabilities, k=population))
-    return school
+    return Counter(choices(population=labels, weights=probabilities, k=population))
 
 
 def _update_pr_counts(

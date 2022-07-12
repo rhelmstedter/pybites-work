@@ -21,11 +21,10 @@ def timer(func):
     @functools.wraps(func)
     def wrapper_timer(*args, **kwargs):
         tic = perf_counter()
-        value = func(*args, **kwargs)
+        func(*args, **kwargs)
         toc = perf_counter()
         elapsed_time = round(toc - tic, 4)
-        # print(f"Elapsed time: {elapsed_time} seconds", end="\n\n")
-        return elapsed_time, value
+        return elapsed_time
 
     return wrapper_timer
 
@@ -42,7 +41,7 @@ def comparison_runner(funcs: dict, trials: int, trial_params: dict) -> dict[floa
     comparison_results = {"Trials": trials}
     for i, (func_name, func) in enumerate(funcs.items()):
         func = timer(func)
-        elapsed_time, _ = func(trials, **trial_params)
+        elapsed_time = func(trials, **trial_params)
         comparison_results[func_name] = elapsed_time
     return comparison_results
 
