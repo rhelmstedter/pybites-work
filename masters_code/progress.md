@@ -373,11 +373,17 @@ def display_table(comparison_results: list[dict]) -> None:
 
 This produces the following table.
 
-![comparison results table]()
+![comparison results table](https://github.com/rhelmstedter/pybites-work/blob/main/masters_code/assests/comp_table.png)
+
+How gorgeous is that? The goal of improving readability resulted in improving performance. By. A. Lot. This is because I am using the tools provided in python the way the are intended. There are people more experienced than I am who have devoted hours and hours to optimize these tools so I might as well take advantage of them. If you are interested in the entire [comparison script](https://github.com/rhelmstedter/pybites-work/blob/main/masters_code/compare_programs.py) is it also in the repo.
 
 
 ## Moral of the Story 
 
 >It doesn't matter where you start. Just be better tomorrow than you are today.
 
-When I first started learning python, I didn't even know what I didn't know. I wrote spaghetti code, and flung it against the wall to see what sticks. Today is not much different. I still try things that often don't work. In fact, my first attempt at refactoring the code I shared with you today hit a dead end. I put in hours of work only to realize I was solving the wrong problem. The biggest difference between today and when I first started is knowing how to search for help, and time in the saddle.
+When I first started learning python, I didn't even know what I didn't know. I wrote spaghetti code and flung it against the wall to see what sticks. Today is not much different. I still try things that often don't work. In fact, my first attempt at refactoring the code I shared with you today hit a dead end. I put in hours of work only to realize I was solving the wrong problem. The biggest difference between today and when I first started boils down to two things: knowing how to search for help and time in the saddle.
+
+I found communities like PyBites where I can ask questions. I have been exposed to more vocabulary and can ask better questions. And most importantly, I have written a lot of code (not all of it good). At the time of this writing, I have solved 214 bites on the [PyBites Platform](https://codechalleng.es/). I've created [lessons](https://github.com/rhelmstedter/coding-class) for my students. I have written [tools](https://github.com/PyBites-Open-Source/eatlocal) that solve a problem I'm facing. My goal is to just writing better code today than I did yesterday.
+
+My hope is this story inspires you to write code, keep learning new things, and then apply that learning. Imperfect code that exists > Perfect code that doesn't. Applying new learning to old code > Waiting until you know it all. 
