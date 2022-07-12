@@ -108,7 +108,7 @@ def _create_trial_school(
     return school
 ```
 
-Current me now knows that [counters]() exist, so I used a counter instead of counting manually with `if/else` statements. Next, I needed to address that awful use of `numpy.random.binomial()`. Again, utilizing my favorite tool ever, googling until I find an answer (sure I use duck duck go, but doesn't everyone just calling it googling?), I searched for an alternative. I settled on `random.choices()`. This lets me assign a probability and choose from a list of strings. I can get rid of the embarrassing `int` -> `str` -> `int` conversions. (Honestly, I would appreciate it if we never spoke of that again. Not my proudest moment. Thanks in advance.) So now I run `random.choices()` twice, once for SPED and once for SES then concatenate the labels resulting in four possibilities `["sped low", "sped high", "gen_ed low", "gen_ed high"]` The school counter is updated and returned by the function. The difference between the original and refactored code is shown below:
+Current me now knows that [counters]() exist, so I used a counter instead of counting manually with `if/else` statements. Next, I needed to address that awful use of `numpy.random.binomial()`. Again, utilizing my favorite tool ever, googling until I find an answer (sure I use duck duck go, but doesn't everyone just calling it googling?), I searched for an alternative. I settled on `random.choices()`. This lets me assign a probability and choose from a list of strings. I can get rid of the embarrassing `int` -> `str` -> `int` conversions. (Honestly, I would appreciate it if we never spoke of that again. Not my proudest moment. Thanks in advance.) So now I run `random.choices()` twice, once for SPED and once for SES. Since I am using strings, I need labels for the [compliments](https://en.wikipedia.org/wiki/Complementary_event) of my labels as well. The compliment of SPED is general education (gen_ed) and the compliment of low SES is high SES (high). I concatenated the randomly choosen labels resulting in four possibilities `["sped low", "sped high", "gen_ed low", "gen_ed high"]`. The school counter is updated with each student and returned by the function. The difference between the original and refactored code is shown below. I am using the ellipse to show that there is code above and below the snippets.
 
 ```python
 # This original code
@@ -280,11 +280,13 @@ The entirety of the [refactored code](https://github.com/rhelmstedter/pybites-wo
 
 There was still something that bothered me about the refactoring. I was really unhappy with `_create_trial_school()`. I didn't like that `random.choices()` returned a list so I had to get the item out of the list then concatenate the labels together. It would be so much easier if I could just call choices once with the appropriate probabilities for each label. And after during some more digging (and actually reading the friendly manual) I saw that `random.choices()` actually has a `k` argument and returns "[a k sized list of elements chosen from the population with replacement](https://docs.python.org/3/library/random.html#random.choices)". That means I could label the entire student population in one fell swoop. But how to calculate the correct probabilities. I no longer had a coding problem, I had a math problem.
 
-I thought and thought. I wrote some code that resulted in that 200% of low SES being in SPED (I really don't want to talk about it). I emailed a colleague asking about probability and he (very politely) informed me I was COMPLETELY wrong. And then I finally, begrudgingly did what I also ask of my students. Draw a picture. Ok, if I know that the entire student body is 100%. My problem is two-dimensional: SPED and SES. I need a rectangle. So the probability of being SPED is 7/20, which means the probability of being general ed is 13/20. The second dimension is a probability of being low SES (1/6) and high SES (5/6). This leads to the picture:
+I thought and thought. I wrote some code that resulted in that 200% of low SES being in SPED (I really don't want to talk about it). I emailed a colleague asking about probability and he (very politely) informed me I was COMPLETELY wrong. And then I finally, begrudgingly did what I also ask of my students. Draw a picture.
 
-![probability rectangle](./assests/prob_rect.png)
+OK, I know that the entire student body is the whole (100%). My problem is two-dimensional: SPED and SES so I need a rectangle. The probability of being labeled SPED is 7/20, which means the probability of being general ed is 13/20. The second dimension is a probability of being low SES (1/6) and high SES (5/6). This leads to the picture:
 
-![Oh my god](./assests/omg.gif)
+![probability rectangle](https://raw.githubusercontent.com/rhelmstedter/pybites-work/main/masters_code/assests/prob_rect.png)
+
+![Oh my god](https://raw.githubusercontent.com/rhelmstedter/pybites-work/main/masters_code/assests/omg.gif)
 
 It was so simple. Why did I not think of this before? I knew exactly what to do. Refactoring `_create_trial_school()` for a second time yielded:
 
@@ -303,23 +305,79 @@ def _create_trial_school(
 
     prob_gen_ed = 1 - prob_sped
     prob_high_ses = 1 - prob_low_ses
-    labels = ["sped low", "sped high", "gen_ed low", "gen_ed high"]
-    probabilities = [
+    labels = ("sped low", "sped high", "gen_ed low", "gen_ed high")
+    probabilities = (
         round(prob_sped * prob_low_ses, 3),
         round(prob_sped * prob_high_ses, 3),
         round(prob_gen_ed * prob_low_ses, 3),
         round(prob_gen_ed * prob_high_ses, 3),
-    ]
+    )
     return Counter(choices(population=labels, weights=probabilities, k=population))
 ```
 
+I decided to explicitly label the probabilities for the compliments so that when I created the tuple later, it was easy to quickly read what was happening. I also made a tuple of the labels instead of concatenating them. Again, much easier to read and see what is happening. The beauty of this is I can directly return the counter where `random.choices()` returns a list of the simulated student body. The [improved simulation](https://github.com/rhelmstedter/pybites-work/blob/main/masters_code/improved.py) can also be found in the repo.
+
 ## Comparing performance
 
-Now I was curious...
+I had done all of this refactoring with the goal of making the code easier to read, understand, and maintain. Performance was an afterthought. But now I was curious... Had all of these changes impacted performance? So I returned to google and found a timer decorator from [Real Python](https://realpython.com/python-timer/#a-python-timer-decorator) and modified to fit my needs. Then I moved my original code in a function, but did not change anything that impacted performance ([code](https://github.com/rhelmstedter/pybites-work/blob/main/masters_code/original_func.py) if you're interested). I ran black, and gave it the same arguments as the refactored code so I could run all three with the same parameters. To accomplish that, I created `comparison_runner()` to run each of the three versions ([original](), [refactored](https://github.com/rhelmstedter/pybites-work/blob/main/masters_code/refactored.py), and [improved](https://github.com/rhelmstedter/pybites-work/blob/main/masters_code/improved.py)). 
+
+```python
+
+def comparison_runner(funcs: dict, trials: int, trial_params: dict) -> dict[float]:
+    """Run the three functions with the same number of trials and stats.
+
+    :funcs: dict Keys are a printable name, values are the function itself.
+    :trials: int The number of trials to run.
+    :trial_params: dict Contains school poplulation and probabilities of labels.
+    """
+
+    seed(1)
+    comparison_results = {"Trials": trials}
+    for i, (func_name, func) in enumerate(funcs.items()):
+        func = timer(func)  # Since functions are imported, I can't use the @timer syntactic sugar  
+        elapsed_time = func(trials, **trial_params)
+        comparison_results[func_name] = elapsed_time
+    return comparison_results
+```
+
+I passed in the functions as a dictionary because the functions are all called `run_trials()` in their original module. When I tried to print the names, I didn't know which was which. The dictionary gave me a way to label each function. The trials needed to be passed independently of the other parameters so I could run a different number of trials. And I was able to finally able to make use of the [**](https://peps.python.org/pep-0448/) unpacking operator (and felt like a badass). This returns a dictionary with the number of trials, function names and the elapsed time.
+
+I may be slightly obsessed with [rich](https://pypi.org/project/rich/) and this seemed to be the perfect opportunity to create a table.
+
+```python
+def display_table(comparison_results: list[dict]) -> None:
+    """Display table that compares function performance across a range of trials.
+
+    :comparison_results: list A list of results dictionaries from the comparison_runner.
+    :returns: None
+    """
+
+    console = Console()
+    table = Table(title="Comparison Results (in seconds)")
+    for column in comparison_results[0].keys():
+        table.add_column(column, justify="center")
+
+    for results in comparison_results:
+        refactored_ratio = round(results["Original"] / results["Refactored"], 1)
+        improved_ratio = round(results["Original"] / results["Improved"], 1)
+        last_trial_width = len(str(trial_sets[-1]))
+        longest_time_width = len(str(comparison_results[-1]["Original"]))
+        table.add_row(
+            f"{results['Trials']:{last_trial_width}d}",
+            f"{results['Original']:0{longest_time_width}.4f}",
+            f"{results['Refactored']:0{longest_time_width}.4f} [green]({refactored_ratio}x)[/green]",
+            f"{results['Improved']:0{longest_time_width}.4f} [green]({improved_ratio}x)[/green]",
+        )
+    console.print(table)
+```
+
+This produces the following table.
+
+![comparison results table]()
 
 
 ## Moral of the Story 
 
 >It doesn't matter where you start. Just be better tomorrow than you are today.
 
-When I first started learning python, I didn't even know what I didn't know. I wrote spaghetti code, flung it against the wall and see what sticks. Today is not much different. I still try things that often don't work. In fact, my first attempt at refactoring the code I will share with you today hit a dead end. I put in hours of work only to realize I was solving the wrong problem. The biggest difference between today and when I first started is knowing how to search for help, and time in the saddle. (maybe this is a conclusion?)
+When I first started learning python, I didn't even know what I didn't know. I wrote spaghetti code, and flung it against the wall to see what sticks. Today is not much different. I still try things that often don't work. In fact, my first attempt at refactoring the code I shared with you today hit a dead end. I put in hours of work only to realize I was solving the wrong problem. The biggest difference between today and when I first started is knowing how to search for help, and time in the saddle.
