@@ -1,0 +1,197 @@
+# Progress
+
+ I have learned a lot over the past 2.5 years of my python journey. What started out as a hobby during covid-19 lock downs in 2020, has now become a major component of my professional workload. This article is designed to highlight the importance of the iterative process: write some code -> learn new stuff -> review some code -> refactor. I will share some code I wrote in May 2020 (approximately two months into learning python), my thought process at the time, how I decided to refactor it, and finally a performance comparison of the programs. One big factor that I will not mention in this particular article is testing. Yes, I should have had some tests to run against my refactored code to ensure I was not wandering off course. However, this code was made to be used by only me and not in production. I mean, when I first wrote the code, I didn't even know what tests were. Instead, I will focus design decisions and the surprising, if not incidental, performance impacts.
+ 
+
+## Background
+
+I recently earned a master's degree in Curriculum and Instruction. One class in the program was centered on a text that I had strong opinions about. I interpreted the text as blaming educators and didn't appreciate it at all. So the thesis of one of my papers ([Specious Solutions](https://github.com/rhelmstedter/pybites-work/blob/main/masters_code/assests/specious_solutions.pdf) if you are interested in reading the whole thing) focused on dismantling their argument on proportional representation (PR). In schools, at least here in California, US, we have different categories for students. For example, if a student needs extra academic or emotional support or have some kind of disability, they can receive special education services and are subsequently categorized as Special Education (SPED). If students come from poor families as indexed by federal standards they are categorized as low Socio-Economic Status (SES). Assuming that you didn't go read the linked paper, here is part of the argument that got me so worked up:
+
+>Because proportional representation anchors the equity audit (as discussed above), the equity audit form requires that data collection include fractions along with percentages to be able to measure proportional representation. For example, of 100 students labeled with disabilities, if 70 of these students receive free and reduced-priced lunch, then the fraction for this data is 70/100 and the percent is 70%. This data can then be compared to the percent of students in the school who are receiving free and reduced-price lunch, which in this example is 210 students out of 600 (210/600 = 35%). Thus, in this example, at this school, we know that students from low-income homes are twice as likely to be labeled for special education, and thus are over-represented in special education. Proportional representation of students from low-income homes in special education should be 35% or less.
+
+Without getting too far into the weeds (if you enjoy getting into the weeds, go read the paper), their argument assumes that SPED and low SES are independent, and randomly distributed across the population. But even if that were the case—and I cite evidence in the paper that is most likely not the case—I was not convinced that PR would be likely to occur naturally. Given that, at that time, I had been learning python for a few months, I decided to create a simulation.
+
+## Original ~~Sin~~ Code
+
+My idea was to simulate a school by randomly label students as SPED or Low SES using the given probabilities from the text. The program would then count how many students were labeled as SPED, low SES, or both, calculate the portion of low SES students overall and of low SES students in SPED, and finally, if the portions matched precisely, the school would have PR. Repeat this process for a large number of trials and see how often it would actually happen. 
+
+One more detail before we get to the code, though the text claims that PR for low SES students in SPED should be 35% or less, this is the first flaw of their argument. If low SES students are __under__ represented in SPED that must be accompanied by an __over__ representation of another population. Still, I cut them some slack and gave them a 2% buffer.
+
+
+I must warn you, the code you are about to see is painful. I didn't really know how to accomplish the simulation, but I did know that I could generate random numbers with python. So I start googling something along the lines of "choosing random numbers based on a probability". Somewhere across the internet I stumbled on [numpy.random.binomial](https://numpy.org/doc/stable/reference/random/generated/numpy.random.binomial.html). This returned either 0 or 1 based on the probability of the label. I ran this twice with the probability for sped and low SES respectively, converted them to a string so I could concatenated them. Converting them back to `ints`,  10 represented a student being labeled as SPED, 1 represented a student being labeled as low SES, and 11 was labeled both. (Why didn't I just compare the strings? I'm not sure. Maybe at the time I thought I could only compare numerical values? I don't really remember.) Here is my original script in all its glory:
+
+```python
+"""The original script I included with my paper"""
+import numpy as np
+import random
+
+n = 1
+p_sped = (1/6)
+p_lowin = (7/20)
+
+runs = 10000
+pop = 600
+
+PR_exact = 0
+PR_twoper = 0
+for i in range(runs):
+    sped = 0
+    lowin = 0
+    both = 0
+    sample_school = []
+    for s in range(pop):
+        student = str(np.random.binomial(n,p_sped)) + str(np.random.binomial(n,p_lowin))
+        if int(student) == 10:
+            sped += 1
+        elif int(student) == 1:
+            lowin += 1
+        elif int(student) == 11:
+            both += 1
+        sample_school.append(student)
+    per_lowsped = both/(sped + both)
+    per_lowpop = (lowin+both)/(pop)
+    if 0<(per_lowsped-per_lowpop)<= 0.02:
+        PR_twoper += 1
+    elif per_lowsped==per_lowpop:
+        PR_exact +=1
+
+prob_PR_exact = (PR_exact/runs)*100
+prob_PR_twoper = (PR_twoper/runs)*100
+print('The probability of having exact proportional representation in ' +str(runs) + ' trials is: '
+      + str(prob_PR_exact) + '%')
+print('The probability of having proportional representation within 2% in ' +str(runs) + ' trials is: '
+      + str(prob_PR_twoper) + '%')
+```
+
+I know, I know... It is rough. Reading this code in the last week or so, I can not believe I had included it in my final paper. Let's identify some issues:
+
++ **formatting**: super difficult to read. I clearly had not heard of [black](https://pypi.org/project/black/).
++ **naming variables**: objectively terrible. C'mon man, I wrote this and still struggled with `PR_twoper`. I had forgotten what much of stood for until I went back and read the paper.
++ **unused imports**: why was I importing random, I didn't even use it?
++ **inefficient**: I am using numpy (which is supposed to be super fast!), but then converting to a string because I needed to get two labels and then converting it back to an integer for the conditionals. I am also created a sample school, appending students to it, but then I never use it. What?!?
++ **inaccurate**: I wasn't aware how inaccurate floats could be I didn't include any kind of rounding. Also, during the refactoring process I realized I should have included the exact proportional representation in the "within 2%" calculation as well. This is a small difference and doesn't change the analysis of the paper, but still important.
+
+
+## Refactoring
+
+In this section I will describe my thought process in refactoring the original code into something that is more readable. My goal was to abstract chunks of code that were responsible for specific behavior into functions. I did not try to come up with all the functions at once and the ended code that I am sharing with you happened incrementally. Step one I ran my code against black. While this alone made it easier to read ([don't want to miss the gorilla]()), I knew that wasn't the biggest problem. I knew I needed to have better variable names, but decided to let that happen organically as I created the functions. As an added bonus, abstracting behavior into functions lets me add docstrings](https://peps.python.org/pep-0257/) and [type hints](https://docs.python.org/3/library/typing.html). This way when I try to review this again in the future, I will know what past me was thinking.
+
+## Creating a School
+
+The first consequential issue that jumped out at me was the nested `for` loops. Starting with the inner loop, I tried to describing in simple plain language what was happening. __I was creating a school and counting the numbers of students with each label__. This lead to the helper function `_create_trial_school()`.
+
+```python
+def _create_trial_school(
+    population: int, prob_sped: float, prob_low_ses: float
+) -> Counter:
+    """Creates a counter of students with one of four possible labels: 'sped low',
+    'sped high', 'gen_ed low' 'gen_ed high'.
+
+    :population: int The number of students in the school.
+    :prob_sped: float The probability that a student is labeled as sped.
+    :prob_low_ses: float The probability that a student labeled as low ses.
+    :returns: Counter The number of students with each label.
+    """
+
+    school = Counter()
+    for s in range(population):
+        student = (
+            choices(
+                population=["sped ", "gen_ed "],
+                weights=[prob_sped, 1 - prob_sped],
+            )[0]
+            + choices(
+                population=["low", "high"],
+                weights=[prob_low_ses, 1 - prob_low_ses],
+            )[0]
+        )
+        school.update([student])
+    return school
+```
+
+Current me now knows that [Counters]() exist, so I used a counter instead of counting manually with `if/else` statements. Next, I needed to address that awful use of `numpy.random.binomial()`. Again, utilizing my favorite tool ever, googling until I find an answer (sure I use duck duck go, but doesn't everyone just calling it googling?), I searched for an alternative. I settled on `random.choices()`. This lets me assign a probability and choose from a list of strings. I can get rid of the embarrassing `int` -> `str` -> `int` conversions. (Honestly, I would appreciate it if we never spoke of that again. Not my proudest moment. Thanks in advance.) So now I run `random.choices()` twice, once for SPED and once for SES then concatenate the labels resulting in four possibilities `["sped low", "sped high", "gen_ed low", "gen_ed high"]` The school counter is updated and returned by the function. The differnce between the original and refactored code is shown below:
+
+```python
+# This original code
+...
+    sped = 0
+    lowin = 0
+    both = 0
+    sample_school = []
+    for s in range(pop):
+        student = str(np.random.binomial(n,p_sped)) + str(np.random.binomial(n,p_lowin))
+        if int(student) == 10:
+            sped += 1
+        elif int(student) == 1:
+            lowin += 1
+        elif int(student) == 11:
+            both += 1
+        sample_school.append(student)
+...
+
+# Becomes this refactored code
+...
+    school = _create_trial_school(population, prob_sped, prob_low_ses)
+...
+```
+
+## Counting Proportional Representation
+
+Up next, another counter! I realized that I am again counting how many of my newly created trial schools actually have proportional representation. However, I need this counter to persist across schools. So I create a `Counter()` outside of the first for loop of my original code and then create the helper function `_update_pr_counts()`.
+
+```python
+def _update_pr_counts(
+    pr_counter: Counter,
+    percent_low_ses_overall: float,
+    percent_low_ses_in_sped: float,
+) -> None:
+    """Updates the number of schools that have proportional representation.
+
+    :pr_counter: Counter The proportional representation counter to be updated.
+    :percent_low_ses_overall: float The percentage of students at the school who are
+        labeled low income.
+    :percent_low_ses_in_sped: float The percentage of students who are labeled both as
+        low income and sped.
+    :returns: Counter The proportional representation counter updated if the school has
+        proportional representation.
+    """
+
+    if percent_low_ses_overall == percent_low_ses_in_sped:
+        pr_counter.update(["exact"])
+    if 0 <= percent_low_ses_overall - percent_low_ses_in_sped <= 0.02:
+        pr_counter.update(["within range"])
+    return pr_counter
+```
+This fixes my inaccuracies of not including exact PR in the 2% range, and uses more clear variable names. Having `_create_trial_school()` return a counter slightly changes how I count and calculate the portion of low SES students in SPED, and low SES overall. I split it into two parts. Just calculate the counts and then pass the portion directly as part of the next function.
+
+
+```python
+# This original code
+for i in range(runs):
+...
+    per_lowsped = both / (sped + both)
+    per_lowpop = (lowin + both) / (pop)
+    if 0 < (per_lowsped - per_lowpop) <= 0.02:
+        PR_twoper += 1
+    elif per_lowsped == per_lowpop:
+	   PR_exact += 1
+...
+
+# Becomes this refactored code
+    proportional_representation = Counter()
+    for _ in range(trials):
+	   ...
+        count_sped = school["sped low"] + school["sped high"]
+        count_low_ses = school["sped low"] + school["gen_ed low"]
+        proportional_representation = _update_pr_counts(
+            proportional_representation,
+            percent_low_ses_overall=round(count_low_ses / population, 3),
+            percent_low_ses_in_sped=round(school["sped low"] / count_sped, 3),
+        )
+```
+
+# Moral of the Story 
+
+>It doesn't matter where you start. Just be better tomorrow than you are today.
+
+When I first started learning python, I didn't even know what I didn't know. I wrote spaghetti code, flung it against the wall and see what sticks. Today is not much different. I still try things that often don't work. In fact, my first attempt at refactoring the code I will share with you today hit a dead end. I put in hours of work only to realize I was solving the wrong problem. The biggest difference between today and when I first started is knowing how to search for help, and time in the saddle. (maybe this is a conclusion?)
