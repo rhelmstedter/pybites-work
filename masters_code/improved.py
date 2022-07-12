@@ -16,13 +16,13 @@ def _create_trial_school(
 
     prob_gen_ed = 1 - prob_sped
     prob_high_ses = 1 - prob_low_ses
-    labels = ["sped low", "sped high", "gen_ed low", "gen_ed high"]
-    probabilities = [
+    labels = ("sped low", "sped high", "gen_ed low", "gen_ed high")
+    probabilities = (
         round(prob_sped * prob_low_ses, 3),
         round(prob_sped * prob_high_ses, 3),
         round(prob_gen_ed * prob_low_ses, 3),
         round(prob_gen_ed * prob_high_ses, 3),
-    ]
+    )
     return Counter(choices(population=labels, weights=probabilities, k=population))
 
 
