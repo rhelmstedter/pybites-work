@@ -1,10 +1,8 @@
 from collections import Counter
 from random import choices, seed
 
-from rich.progress import track
 
-
-def _create_trial_shool(
+def _create_trial_school(
     population: int, prob_sped: float, prob_low_ses: float
 ) -> Counter:
     """Creates a counter of students with one of four possible labels: 'sped low',
@@ -37,7 +35,7 @@ def _update_pr_counts(
     percent_low_ses_overall: float,
     percent_low_ses_in_sped: float,
 ) -> None:
-    """Upates the number of schools that have proportional representation.
+    """Updates the number of schools that have proportional representation.
 
     :pr_counter: Counter The proportional representation counter to be updated.
     :percent_low_ses_overall: float The percentage of students at the school who are
@@ -64,6 +62,7 @@ def run_trials(
 ) -> dict[str, float]:
     """Run the trials to simulate a school with a given probabilities of students being
     labeled sped and low ses.
+
     :trials: int The number of trials to run.
     :population: int The number of students at the school.
     :prob_sped: float The probability that a student is labeled as sped.
@@ -72,9 +71,8 @@ def run_trials(
         representation across all trials.
     """
     proportional_representation = Counter()
-    # for _ in track(range(trials), f"With {trials:,} trials"):
     for _ in range(trials):
-        school = _create_trial_shool(population, prob_sped, prob_low_ses)
+        school = _create_trial_school(population, prob_sped, prob_low_ses)
         count_sped = school["sped low"] + school["sped high"]
         count_low_ses = school["sped low"] + school["gen_ed low"]
         proportional_representation = _update_pr_counts(
