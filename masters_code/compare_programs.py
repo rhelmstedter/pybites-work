@@ -14,8 +14,8 @@ from improved import run_trials as improved_run_trials
 def timer(func):
     """Timer decorator
 
-    This wraps the main trial functions and returns the time elapsed in addition to the
-    original return objects.
+    This wraps the run trial functions and returns the time elapsed.
+    :func: function The function you are trying to time.
     """
 
     @functools.wraps(func)
@@ -35,6 +35,7 @@ def comparison_runner(funcs: dict, trials: int, trial_params: dict) -> dict[floa
     :funcs: dict Keys are a printable name, values are the function itself.
     :trials: int The number of trials to run.
     :trial_params: dict Contains school poplulation and probabilities of labels.
+    :returns: dict The number of trials and elapsed times for each function.
     """
 
     seed(1)
@@ -46,7 +47,13 @@ def comparison_runner(funcs: dict, trials: int, trial_params: dict) -> dict[floa
     return comparison_results
 
 
-def display_table(comparison_results: list[dict]):
+def display_table(comparison_results: list[dict]) -> None:
+    """Display table that compares function performance across a range of trials.
+
+    :comparison_results: list A list of results dictionaries from the comparison_runner.
+    :returns: None
+    """
+
     console = Console()
     table = Table(title="Comparison Results (in seconds)")
     for column in comparison_results[0].keys():
@@ -72,7 +79,7 @@ if __name__ == "__main__":
         "Refactored": refactored_run_trials,
         "Improved": improved_run_trials,
     }
-    trial_sets = [10**n for n in range(6)]
+    trial_sets = [10 ** n for n in range(6)]
     trial_params = {
         "population": 600,
         "prob_sped": 0.166,
@@ -82,6 +89,5 @@ if __name__ == "__main__":
     comparison_results = []
     for trials in trial_sets:
         with Status(f"Running comparisons with {trials:,} trials..."):
-            results = comparison_runner(funcs, trials, trial_params)
-            comparison_results.append(results)
+            comparison_results.append(comparison_runner(funcs, trials, trial_params))
     display_table(comparison_results)
