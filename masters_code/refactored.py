@@ -61,7 +61,7 @@ def run_trials(
     prob_low_ses: float,
     print_results: bool = True,
 ) -> dict[str, float]:
-    """Run the trials to simulate a school with a given probabilities of students being
+    """Run trials simulating a school with a given probabilities of students being
     labeled sped and low ses.
 
     :trials: int The number of trials to run.
