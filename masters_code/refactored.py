@@ -96,5 +96,5 @@ def run_trials(
 
 if __name__ == "__main__":
     seed(1)
-    trials = 10000
+    trials = 1000
     results = run_trials(trials, 600, 0.166, 0.35)
