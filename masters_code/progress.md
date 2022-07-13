@@ -156,9 +156,10 @@ def _update_pr_counts(
         proportional representation.
     """
 
-    if percent_low_ses_overall == percent_low_ses_in_sped:
+    pr_delta = percent_low_ses_overall - percent_low_ses_in_sped
+    if pr_delta == 0:
         pr_counter.update(["exact"])
-    if 0 <= percent_low_ses_overall - percent_low_ses_in_sped <= 0.02:
+    if 0 <= pr_delta <= 0.02:
         pr_counter.update(["within range"])
     return pr_counter
 ```
