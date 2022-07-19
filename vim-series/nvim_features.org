@@ -1,0 +1,28 @@
+* Nvim Features
+This document serves as a reference for details I want to share about my nvim config.
+** Python
+These are all the features i use for writing python code.
+*** Writing Code
+   + snippets
+**** lsp features
+    + go to definition
+    + rename
+    + auto import
+*** Running Code
+   + floating terminal to run current file
+   + floating terminal to run debugger
+   + floating terminal to run REPL
+   + pytest in a split window to still see code
+** Markdown
+  + syntax highlighting
+  + symbols-outline
+  + surround with link
+** Harpoon
+Builds on the idea of marks which are native to vim.
+** Telescope
+   + find files
+   + find in help tags
+   + grep across files
+** Zettelkasten
+Allows me to take notes, and link them in an easily discoverable way.
+
