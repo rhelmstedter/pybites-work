@@ -1,0 +1,63 @@
+#+TITLE: Learn Better Interview
+#+AUTHOR: Russell Helmstedter
+#+DATE: <2022-10-02 Sun>
+
+* Learn Better Interview Outline
+Start by naming all six of the facets. Than provide a short description of each. We can drill down on whatever catches your eye. Finally, be sure to relate it back to the platform.
+** Six Facets of learning
+The six facets of learning are:
++ Value
++ Target
++ Develop
++ Extent
++ Relate
++ Rethink
+*** The Knowledge Effect
+What you know is often the biggest predictor of what you are able to learn. Boser calls this the Knowledge Effect. While, especially amidst the digital information revolution of tools like google, facts are less important, they still matter. It is difficult to reach flow when constantly looking things up and context switching. The Knowledge Effect is so powerful because it provides a wider and deeper pool from which to think about relationships. This is exactly what is required when attempting to extend, relate, and rethink.
+
+Having facts stored in long-term memory and skills stored in muscle memory frees up short-term and working memory to solve problems or learn new things. Fluency aides new learning.
+*** Value
+Value is closely associated with motivation. In order to learn, the content must hold value for the learner. Simply telling the learner that information is important can backfire due to the perceived loss of autonomy. We are more likely to engage with and therefore learn a topic with which we have experience (see: The Knowledge Effect). While not impling that all content must be 'real world', value is about finding meaning in what you are learning.
+*** Target
+Targeting involves setting goals, creating plans, acquiring background skills, and focusing on expertise.
+
+Learning needs to be broken down into digestible pieces that can be held in short-term memory in order to be transferred to long-term memory.
+
+**** Transferring to LTM
+Hermans (2021) offers several strategies to assist with transferring information from short-term memory to long-term memory (see: Memory). When learning new syntax, use flashcards paired with retrieval practice. The act of recalling information—even if you do not remember entirely or correctly—strengthens LTM over time. For more complex ideas and concepts, use elaboration to organize new information within your schemata. Recognizing relationships between ideas leads to better retention because when memories are connected, they become easier to find. As a result, active elaboration strengthens the network of memories and eases retrieval.
+*** Develop
+While Boser does not using this phrase exactly, the develop facet is all about Deliberate Practice. Boser adds that learning should include monitoring or tracking progress. Monitoring develops awareness of potential weak points. It is difficult to know what is going on without data.
+**** Deliberate Practice
+Experience is not always correlated with superior performance. Superior performance (expertise) is found when the practitioner is:
+
+1. given a task with well-defined goals
+2. motivated to improve
+3. provided with feedback
+4. provided ample opportunities for repetition and gradual refinement
+
+These conditions constitute deliberate practice.
+
+"The best training situations focus on activities of short duration with opportunities for immediate feedback, reflection, and corrections" (Ericsson, 2008). Each trial should be followed by a similar task until it can be completed accurately and with fluency. Then the skill should be embedded in more complex contexts.
+*** Extent
+Extend mastery by synthesizing ideas. Create more complexity with what you already know by playing riffs on a common theme. Utilize the facts you know in different combinations to build a more nuanced understanding of existing knowledge and forge new connections. Write Three-sentence Essays, Squeeze and Stretch ideas, think about how you would create a lesson to teach someone else an idea.
+
+As an analogy, think of a coder on their way to become a programmer. Their thinking begins to transcend fundamentals like syntax, and they see how those facts fit together (see: Pattern Expertise).
+**** Pattern Expertise
+The ability to understand relationships between facts and identify patterns separates experts from novices. In other words, they are able to take advantage of [the Knowledge Effect](202208011658.md). Boser illustrates this through the example of expert chess players. They are able to recognize more positions. By recognizing positions (instead of memorizing each individual piece) they are able to problem solve with their short-term and working memory.
+
+Richland argues that to build concepts, solve problems, to engage in any sort of critical thinking, learnings must explore patterns within an area of expertise. I.e., higher order thinking boils down to reasoning about relationships. Experts find a way to see through complexity and chaos in order to understand the essence of an idea. Experts seek causes, analogies, and compare and contrast.
+*** Relate
+Relating is all about making connections between new knowledge and knowledge already stored in LTM. Develop Pattern Expertise, identify Deep and Shallow Features, and ask What if Questions while working through iterative processes that build deep understanding over time. Construct analogies between existing knowledge you have and the topic you are learning. Squeeze and Stretch ideas zooming into the details and zooming out to get a big picture. Though content matters, it is not enough to truly learn (see:  The Paradox of the Knowledge Effect).
+**** The Paradox of the Knowledge Effect
+Content must precede connections, but a lack of higher order thinking skills within a topic means we haven't learned. There also exists a learning catch-22: the more we know, the more we believe we know. This phenomenon is know as the expert blind spot or illusory superiority. We all tend to believe we are above average.
+*** Rethink
+Familiarity does not imply understanding. The bane of learning is overconfidence. But as with so much else, there exists a Laffer curve—over-confidence leads to slacking off; under-confidence leads to paralyzation. Thus it is crucial to measure your current understanding. Over time we forget or fall back on old mental models.
+
+Even when the programmer develops a better model, the old _wrong_ model doesn't just disappear. That is not how the network of knowledge stored in the brain works. Until the paths leading to the new model are better formed than the paths leading to the old it is common to revert to the old model under times of high-cognitive load.
+** How does PyBites fit into this model?
++ Value: My guess is people who join the platform already value python.
++ Target: Pathways are great ways to target specific skills. There is still value in just going in order of difficulty and seeing a variety of skills because each bite is bite-sized by nature.
++ Develop: The tests—and programming in general—provide instant feedback. You can easily track your progress by seeing how many bites you have solved.
++ Extend: The bites progressively get harder. But the best way, in my opinion, is looking at other people's solutions in the forums.
++ Relate: This one is the weakest connection of the platform. Requires an external reflection piece. (Is there a place to right notes about the bites? What if we made a webbased zettelkasten for the bites!!)
++ Rethink: This can also be achieved by looking through the forums and seeing how others approach a problem. My favorite idea is to go back to a bite you have solved before, and add additional constraints. If you solved it last time with a for loop, use a comprehension this time. If you uses string methods, build your own function that replicates the behavior. These constaints should not necessarily used in production, but as an exercise to develop deep understanding, they are invaluable.
