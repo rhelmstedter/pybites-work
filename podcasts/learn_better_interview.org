@@ -19,7 +19,9 @@ Having facts stored in long-term memory and skills stored in muscle memory frees
 *** Value
 Value is closely associated with motivation.
 
-> I am a high school math teacher. I sell a product to a market that doesn't want it, but is required by law to buy it. -Dan Meyer
+#+BEGIN_QUOTE
+I am a high school math teacher. I sell a product to a market that doesn't want it, but is required by law to buy it. -Dan Meyer
+#+END_QUOTE
 
 In order to learn, the content must hold value for the learner. Simply telling the learner that information is important can backfire due to the perceived loss of autonomy. We are more likely to engage with and therefore learn a topic with which we have experience (see: The Knowledge Effect). While not impling that all content must be 'real world', value is about finding meaning in what you are learning.
 *** Target
