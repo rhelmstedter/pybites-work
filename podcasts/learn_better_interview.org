@@ -17,7 +17,11 @@ What you know is often the biggest predictor of what you are able to learn. Bose
 
 Having facts stored in long-term memory and skills stored in muscle memory frees up short-term and working memory to solve problems or learn new things. Fluency aides new learning.
 *** Value
-Value is closely associated with motivation. In order to learn, the content must hold value for the learner. Simply telling the learner that information is important can backfire due to the perceived loss of autonomy. We are more likely to engage with and therefore learn a topic with which we have experience (see: The Knowledge Effect). While not impling that all content must be 'real world', value is about finding meaning in what you are learning.
+Value is closely associated with motivation.
+
+> I am a high school math teacher. I sell a product to a market that doesn't want it, but is required by law to buy it. -Dan Meyer
+
+In order to learn, the content must hold value for the learner. Simply telling the learner that information is important can backfire due to the perceived loss of autonomy. We are more likely to engage with and therefore learn a topic with which we have experience (see: The Knowledge Effect). While not impling that all content must be 'real world', value is about finding meaning in what you are learning.
 *** Target
 Targeting involves setting goals, creating plans, acquiring background skills, and focusing on expertise.
 
