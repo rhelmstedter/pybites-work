@@ -1,0 +1,23 @@
+#+TITLE: nvim workflow
+#+AUTHOR: Russell Helmstedter
+#+DATE: <2022-11-10>
+
+* My Journey to vim
+** Finding an Editor
+I was using atom, playing around with jupyter not realizing the full potential. I've always been drawn to data science because it is so closely related to the math I teach.
+** An unlikely path
+I was looking into zettelkasten as a note taking solution for my master's program.
+* Why I Made the Switch
+*I don't truly remember. I was on the vim subreddit and this guy called Prime answered a question. So I started watching The Primeagen on youtube.
+** PDE vs IDE
+Tj is one of the core developers. He has this youtube video on his rational for choosing nvim.
+* Transitioning from vim -> nvim
+** Going Full lua
+I treated this as a challenge for myself.
+* My Python Workflow
+** LSP
+** autocomplete
+** telescope
+** harpoon
+** salary comparison
+** data science demo
