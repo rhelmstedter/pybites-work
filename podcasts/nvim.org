@@ -8,7 +8,7 @@ I was using atom, playing around with jupyter not realizing the full potential. 
 ** An unlikely path
 I was looking into zettelkasten as a note taking solution for my master's program.
 * Why I Made the Switch
-*I don't truly remember. I was on the vim subreddit and this guy called Prime answered a question. So I started watching The Primeagen on youtube.
+I don't truly remember. I was on the vim subreddit and this guy called Prime answered a question. So I started watching The Primeagen on youtube.
 ** PDE vs IDE
 Tj is one of the core developers. He has this youtube video on his rational for choosing nvim.
 * Transitioning from vim -> nvim
