@@ -1,20 +1,22 @@
 
 # Table of Contents
 
-1.  [Welcome to Hell](#orgf6e59b8)
-2.  [The Original Script](#org0f0f660)
-3.  [Refactoring Into Functions](#orgb5012f7)
-4.  [Testing](#org58d0351)
-5.  [The Problem](#org5bfedf3)
-6.  [Eureka](#org94fed6d)
-7.  [The Solution](#orgffdd87e)
-8.  [What Did I learn](#org556a978)
+1.  [Welcome to Hell](#org72827b6)
+2.  [The Original Script](#orgcab8ab2)
+3.  [Refactoring Into Functions](#orgd4dc32a)
+4.  [Time to Test](#orgb506aa2)
+5.  [The Problem](#orgd73a7f8)
+6.  [Eureka](#org6946863)
+7.  [The Solution](#org4595126)
+8.  [What Did I learn](#org21d79d9)
 
 
 
-<a id="orgf6e59b8"></a>
+<a id="org72827b6"></a>
 
 # Welcome to Hell
+
+Cue the theme song from [The Fresh Prince of Bel Air](https://youtu.be/1nCqRmx3Dnw?si=XhnQO85XOa61P4u1).
 
 <p class="verse">
 This is a story that turns out well.<br />
@@ -23,14 +25,14 @@ I tried to teach my students all about pytest.<br />
 Instead, for two days, I was sent on a debugging quest.<br />
 </p>
 
-I teach [middle school students](https://www.pybitespodcast.com/1501156/10519921-067-how-data-prepares-students-for-the-future) how to code in python. Given it is the start of our second semester together, I reckoned it was time to talk about the `datetime` module. Students generally love projects that they can connect back to themselves. So I thought a great way to introduce `datetime` was to have it calculate how many days the user has been alive, what day of the week they were born, and, of course, calculate their age.
+I teach [middle school students](https://www.pybitespodcast.com/1501156/10519921-067-how-data-prepares-students-for-the-future) how to code in python. I reckoned it was time to talk about the `datetime` module. Students generally love projects that they can connect back to themselves. So I thought a great way to introduce `datetime` was to have python calculate how many days the user has been alive, what day of the week they were born, and, of course, calculate their age.
 
 As our script grew in complexity, I figured it was time to start testing. We has begun looking at pytest on our last project. I thought to myself, &ldquo;how hard could it be?&rdquo; Refactor into a couple of functions, run a couple tests, and have students submit a nice little project! Famous last words&#x2026;
 
-It&rsquo;s all fun an games until you have room full of people watching you code live.
+It&rsquo;s all fun an games until you have room full of people watching you code live. Oh yeah, and I&rsquo;m supposed to the be expert in the room who is responsible for their education. Is it hot in here, or is it just me?
 
 
-<a id="org0f0f660"></a>
+<a id="orgcab8ab2"></a>
 
 # The Original Script
 
@@ -45,14 +47,13 @@ Let us begin by looking at the original script.
     days = (today - birthday).days
     age = days // 365
     
-    paragraph = f"""You were born on {birthday:%B %d, %Y}. It was a {birthday:%A}. You have been alive for {days:,} days and are {age} years old."""
-    print(paragraph)
+    print(f"""You were born on {birthday:%B %d, %Y}. It was a {birthday:%A}. You have been alive for {days:,} days and are {age} years old.""")
 
-    You were born on May 19, 1986. It was a Monday. You have been alive for 13,790 days and are 37 years old.
+    You were born on May 19, 1986. It was a Monday. You have been alive for 13,791 days and are 37 years old.
 
-We were off to a good start. Students had a great time playing around with this. Most of them are somewhere around 4,000 days old, so I definitely took some heat for having an entire decimal place extra for my days, followed by comments like, &ldquo;wow, you&rsquo;re older than my dad.&rdquo; Thanks kids.
+We were off to a good start. Students had a great time playing around with this. Most of them are somewhere around 4,000 days old, so I definitely took some heat for having an entire extra decimal place for my days, followed by comments like, &ldquo;Wow, you&rsquo;re older than my dad and he&rsquo;s old.&rdquo; Thanks kids.
 
-Then, one student had a great questions, &ldquo;Can we make it calculate the days until our next birthday?&rdquo; Why, yes we can! But I had not account for this level of complexity. We needed a compound conditional. This is something they had never seen before.
+Then, one student had a great question, &ldquo;Can we make it calculate the days until our next birthday?&rdquo; Why, yes we can! But I had not accounted for this level of complexity. We needed a compound conditional, something they had never seen before.
 
     import datetime
     
@@ -79,15 +80,14 @@ Then, one student had a great questions, &ldquo;Can we make it calculate the day
     age = days // 365
     days_till_next_bd = (next_birthday - today).days
     
-    paragraph = f"""You were born on {birthday:%B %d, %Y}. It was a {birthday:%A}. You have been alive for {days:,} days and are {age} years old. There are {days_till_next_bd} days until your next birthday."""
-    print(paragraph)
+    print(f"""You were born on {birthday:%B %d, %Y}. It was a {birthday:%A}. You have been alive for {days:,} days and are {age} years old. There are {days_till_next_bd} days until your next birthday.""")
 
-    You were born on May 19, 1986. It was a Monday. You have been alive for 13,790 days and are 37 years old. There are 89 days until your next birthday.
+    You were born on May 19, 1986. It was a Monday. You have been alive for 13,791 days and are 37 years old. There are 88 days until your next birthday.
 
-At this point, it was already starting to get a little complex. Remember, I was teaching a room full of 41 students who are 11&#x2013;12 years old. But we pushed on. So we asked how else can we make this better? Well, at the moment, it only works for a single birthday. It would be nice to ask the user what their birthday is. It was pretty much the end of the class period, so we pushed off refactoring for the next day.
+At this point, it was already starting to get a little complex. Keep in mind, I was teaching a room full of 41 students who are 11&#x2013;12 years old. But we pushed on. So we asked how else can we make this better? Well, at the moment, it only works for a single birthday. It would be nice to ask the user what their birthday is. It was pretty much the end of the class period, so we pushed off refactoring for the next day.
 
 
-<a id="orgb5012f7"></a>
+<a id="orgd4dc32a"></a>
 
 # Refactoring Into Functions
 
@@ -156,9 +156,9 @@ After figuring out the main thought for each function we started asking ourselve
 Then, we called the functions we just created at the end of the program to get the same output we had at the beginning of all this.
 
 
-<a id="org58d0351"></a>
+<a id="orgb506aa2"></a>
 
-# Testing
+# Time to Test
 
 It is worth mentioning that all of my students have a school issued Chromebook. That means we have to code using web&#x2013;based platforms. My favorite is [replit](https://replit.com) and that is what were using for this project. This will become import in a minute.
 
@@ -181,7 +181,7 @@ Since we are using `input`, I had to talk about mocking and patching. I gave a s
 Beautiful right? I&rsquo;m showing 12 year olds how to mock `input` in pytest. I. Am. Awesome. Full of confidence, I tell the students, &ldquo;Alright everyone, head over to the shell and run pytest&rdquo;.
 
 
-<a id="org5bfedf3"></a>
+<a id="orgd73a7f8"></a>
 
 # The Problem
 
@@ -217,15 +217,15 @@ Now, feeling embarrassed, frustrated, and still in charge of all the students I 
 Once I got home, I figured I would try again on my home machine (macos). So I copied the code and tests, and ran it again. I continued to get the same error. I&rsquo;m frantically scouring the internet looking for clues for dealing with `OSError`. The only information I could find was on errors when trying to open and read files. Nothing really helpful with the context of testing and input. I finally gave up and took the dog for a walk.
 
 
-<a id="org94fed6d"></a>
+<a id="org6946863"></a>
 
 # Eureka
 
-This all happened on a Monday. Because we are on a block schedule, I didn&rsquo;t see the same group of students again until Wednesday. Tuesday I didn&rsquo;t think about the problem. Coming into the class on Wednesday, my plan was to skip over the testing the function with input, and head to the testing the second function, `calc_days_till_next_bd`.
+We had started the project on a Firday. The problem happened on a Monday. Because we are on a block schedule, I didn&rsquo;t see the same group of students again until Wednesday. Tuesday I didn&rsquo;t work directly on the problem. I was <del>scared</del> busy and didn&rsquo;t have time in the evening to work on in. Coming into the class on Wednesday, my plan was to skip over the testing the `build_birthday` function, and jump to the testing the `calc_days_till_next_bd` function with `isinstance`.
 
-We began class with a review of the code we had already written the previous class period. This led to this exchange:
+We began class with a review of the code we had already written the previous class period. This led to this exchange (I&rsquo;m paraphrasing and, possibly, projecting):
 
-**Student**: &ldquo;Do we have to do this? This code is longer and more confusing than what we had at first.&rdquo;
+**Student**: *I&rsquo;ll stump him with this one*. &ldquo;Do we have to do this? This code is longer and more confusing than what we had at first.&rdquo;
 
 **Me**: *Thinking I had the perfect response.* &ldquo;Well for one thing, it allows us give a name to a chunk of code. Instead of holding all the steps in our head at once, we give it a name, and then call that function.&rdquo;
 
@@ -233,7 +233,7 @@ We began class with a review of the code we had already written the previous cla
 
 **Me**: &ldquo;Technically, yes. We do not have to refactor everything into functions. But it helps to organize the code. It allows us to test the code to make sure it is doing what we think it is doing.&rdquo;
 
-**Student**: ::stares skeptically:: &ldquo;You mean the part that isn&rsquo;t working and you don&rsquo;t know how to fix?&rdquo;
+**Student**: *Stares skeptically.* &ldquo;You mean the part that isn&rsquo;t working and you don&rsquo;t know how to fix?&rdquo;
 
 **Me**: &ldquo;Uh yeah&#x2026;&rdquo;
 
@@ -244,11 +244,11 @@ We began class with a review of the code we had already written the previous cla
 And that&rsquo;s when it hit me. I had solved the problem without directly working on it.
 
 
-<a id="orgffdd87e"></a>
+<a id="org4595126"></a>
 
 # The Solution
 
-You may have noticed that in my test, I wrote `from birthday import build_birthday`. While it may be tempting to think that style of importing only looks at the one function, the entire `birthday.py` file is read and executed. So when I run `pytest`, my testing module reads and executes `datetime`, `unittest`, and `birthday`. And what do the final three lines of `birthday` do?
+You may have noticed that in the test, I wrote `from birthday import build_birthday`. While it may be tempting to think that style of importing only looks at the one function, the entire `birthday.py` file is read and executed. So when I run `pytest`, my testing module reads and executes `datetime`, `unittest`, and `birthday`. And what do the final three lines of `birthday` do?
 
     birthday = build_birthday()
     paragraph = create_bd_paragraph(birthday)
@@ -277,7 +277,7 @@ Whenever a python module is run, there is something called a global [symbol tabl
      '__name__': '__main__',
      '__package__': None,
      '__spec__': None,
-     'pprint': <function pprint at 0x100f00d60>}
+     'pprint': <function pprint at 0x10112cd60>}
 
 I have imported `pprint` so that it prints each item in the dictionary on its own line. If you look at the last line, you can see `pprint` is now in the global symbol table. Also, look at the key `'__name__'` . The value is `'__main__'` . Whenever a module is run directly, for example by typing `python3 module_name` or by clicking the run button in your editor of choice, the `'__name__'` attribute is assigned the value `'__main__'` .
 
@@ -297,14 +297,18 @@ To get the dictionary below, I have placed a `globals` function call in the `bir
      'datetime': <module 'datetime' from '/path/to/python3.12/datetime.py'>,
      'pprint': <function pprint at 0x100e585e0>}
 
-Notice anything? Now the `__name__` key is set to `"birthday"` instead of `"__main__"`. So when the `birthday.py` module is imported the `__name__` attribute matches the name of the module. So the idiom allows us to only run certain blocks of code if we are running a module directly as opposed to importing it. By moving the last three lines of `bithday.py` inside the if block, the function calls to `build_bithday` and `create_bd_paragraph` will only be execute if we are running the module directly.
+Notice anything? Now the `"__name__"` key is set to `"birthday"` instead of `"__main__"`. So when the `birthday.py` module is imported the `__name__` attribute matches the name of the module. So the idiom allows us to only run certain blocks of code if we are running a module directly as opposed to importing it. By moving the last three lines of `bithday.py` inside the if block, the function calls to `build_bithday` and `create_bd_paragraph` will only be execute if we are running the module directly.
 
 
-<a id="org556a978"></a>
+<a id="org21d79d9"></a>
 
 # What Did I learn
 
--   Rubber ducky debugging
--   focused vs diffused thinking
--   Walk away
+Well I&rsquo;m not sure. Everything I am about to share I already *knew*.
+
+First, despite being hilarious, [rubber ducky debugging](https://rubberduckdebugging.com) is real. There is power in going line by line through the code and saying out loud&#x2014;or on paper&#x2014;what the code is doing. Returning to the code a couple days later, the act of reviewing the code and explaining what was happening allowed the solution to present itself. It is just in this case, my rubber ducky was a room full of adolescents students.
+
+Second, if you believe things on the internet, it is a [superpower](https://www.theguardian.com/lifeandstyle/2019/jul/28/its-a-superpower-how-walking-makes-us-healthier-happier-and-brainier) to [walk away](https://www.psychologytoday.com/us/blog/prescriptions-life/201901/taking-walk-will-boost-your-creativity-and-problem-solving#:~:text=Einstein%20walked%20on%20the%20beach,of%20their%20lives%20and%20work) from the problem. Einstein, [Hemingway, Thoreau, and Jefferson](https://www.huffpost.com/entry/hemingway-thoreau-jeffers_b_3837002) all proclaim the virtues of walking as a way to clear the mind as they puzzled something out. Barbara Oakley describes two types of thinking: [Focused and Diffused](https://barbaraoakley.com/wp-content/uploads/2018/02/Learning-How-to-Learn-Excerpt.pdf). Focused thinking is when you are intently focused on something. Diffused thinking occurs when your mind is relaxed and you aren&rsquo;t thinking about anything in particular. When trying to solve a problem, becoming hyper-focused can actually be counter productive. We can often get lost in what Boser describes as shallow features instead of taking a step back and reviewing the deep details (for a deep dive on this see [Becoming A More Effective Learner](https://barbaraoakley.com/wp-content/uploads/2018/02/Learning-How-to-Learn-Excerpt.pdf)). Deep details are those that contain the essence of the problem. While shallow details maybe nothing more than distractions. The act of walking&#x2014;and this is important&#x2014;while not actively thinking about the problem can over lead to the solution.
+
+I generally approach neuroscience research that draws conclusions based on brain scans with a healthy dose of skepticism. That being said, in my little N=1 experiment this does seem be the case. I became hyper focused on the shallow detail of the `OSError` instead of taking a step back and thinking about the problem overall. I should have outlined the problem and walked away a lot sooner. This is a hard lesson to learn. So I hope this article serves as a reminder for myself and everyone reading. Sometimes you just have to outline the problem and go walk the dog.
 
