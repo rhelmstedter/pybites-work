@@ -6,14 +6,23 @@
 * Welcome to Hell
 Cue the theme song from [[https://youtu.be/1nCqRmx3Dnw?si=XhnQO85XOa61P4u1][The Fresh Prince of Bel Air]].
 
-#+begin_verse :export t
+#+begin_quote
 This is a story that turns out well.
-But my code got stuck in import hell.
-I tried to teach my students all about pytest.
-Instead, for two days, I was sent on a debugging quest.
-#+end_verse
+#+end_quote
 
-I teach [[https://www.pybitespodcast.com/1501156/10519921-067-how-data-prepares-students-for-the-future][middle school students]] how to code in python. I reckoned it was time to talk about the =datetime= module. Students generally love projects that they can connect back to themselves. So I thought a great way to introduce =datetime= was to have python calculate how many days the user has been alive, what day of the week they were born, and, of course, calculate their age.
+#+begin_quote
+But my code got stuck in import hell.
+#+end_quote
+
+#+begin_quote
+I tried to teach my students all about pytest.
+#+end_quote
+
+#+begin_quote
+Instead, for two days, I was sent on a debugging quest.
+#+end_quote
+
+I teach [[https://www.pybitespodcast.com/1501156/10519921-067-how-data-prepares-students-for-the-future][middle school students]] how to code in python. I reckoned it was time to talk about the ~datetime~ module. Students generally love projects that they can connect back to themselves. So I thought a great way to introduce ~datetime~ was to have python calculate how many days the user has been alive, what day of the week they were born, and, of course, calculate their age.
 
 As our script grew in complexity, I figured it was time to start testing. We has begun looking at pytest on our last project. I thought to myself, "how hard could it be?" Refactor into a couple of functions, run a couple tests, and have students submit a nice little project! Famous last words...
 
@@ -36,7 +45,6 @@ print(f"""You were born on {birthday:%B %d, %Y}. It was a {birthday:%A}. You hav
 #+end_src
 
 #+RESULTS:
-: You were born on May 19, 1986. It was a Monday. You have been alive for 13,790 days and are 37 years old.
 
 We were off to a good start. Students had a great time playing around with this. Most of them are somewhere around 4,000 days old, so I definitely took some heat for having an entire extra decimal place for my days, followed by comments like, "Wow, you're older than my dad and he's old." Thanks kids.
 
@@ -68,22 +76,21 @@ days = (today - birthday).days
 age = days // 365
 days_till_next_bd = (next_birthday - today).days
 
-print(f"""You were born on {birthday:%B %d, %Y}. It was a {birthday:%A}. You have been alive for {days:,} days and are {age} years old. There are {days_till_next_bd} days until your next birthday.""")
+print(f"You were born on {birthday:%B %d, %Y}. It was a {birthday:%A}. You have been alive for {days:,} days and are {age} years old. There are {days_till_next_bd} days until your next birthday.")
 #+end_src
 
 #+RESULTS:
-: You were born on May 19, 1986. It was a Monday. You have been alive for 13,790 days and are 37 years old. There are 89 days until your next birthday.
 
 At this point, it was already starting to get a little complex. Keep in mind, I was teaching a room full of 41 students who are 11--12 years old. But we pushed on. So we asked how else can we make this better? Well, at the moment, it only works for a single birthday. It would be nice to ask the user what their birthday is. It was pretty much the end of the class period, so we pushed off refactoring for the next day.
 
 * Refactoring Into Functions
 The second day, we decided that we start moving chunks of code into functions. We identified three major components of our code.
 
-1. It should build a =datetime.datetime= object for the birthday.
+1. It should build a ~datetime.datetime~ object for the birthday.
 2. It should calculate the days until the next birthday.
 3. It should compile all that information into the paragraph.
 
-After figuring out the main thought for each function we started asking ourselves, "How can we make this better?" Oh, make it interactive with =input=. We could do some data validation to ensure if the user makes a mistake, they can try again. We ended up with the following =birthday.py= module.
+After figuring out the main thought for each function we started asking ourselves, "How can we make this better?" Oh, make it interactive with ~input~. We could do some data validation to ensure if the user makes a mistake, they can try again. We ended up with the following ~birthday.py~ module.
 
 #+begin_src python :export both
 import datetime
@@ -133,7 +140,7 @@ def create_bd_paragraph(birthday: datetime.datetime) -> str:
     days = (today - birthday).days
     age = days // 365
     days_till_next_bd = calc_days_till_next_bd(today, birthday)
-    return f"""You were born on {birthday:%B %d, %Y}. It was a {birthday:%A}. You have been alive for {days:,} days and are {age} years old. There are {days_till_next_bd} days until your next birthday."""
+    return f"You were born on {birthday:%B %d, %Y}. It was a {birthday:%A}. You have been alive for {days:,} days and are {age} years old. There are {days_till_next_bd} days until your next birthday."
 
 
 birthday = build_birthday()
@@ -146,9 +153,9 @@ Then, we called the functions we just created at the end of the program to get t
 * Time to Test
 It is worth mentioning that all of my students have a school issued Chromebook. That means we have to code using web--based platforms. My favorite is [[https://replit.com][replit]] and that is what were using for this project. This will become import in a minute.
 
-At this point, I thought it would useful to start testing. Students have been exposed to pytest already, but still very new. Since the first function returned a =datetime.datetime= object, it would be a great way to introduce the =isinstance= function. Here is where the problems started.
+At this point, I thought it would useful to start testing. Students have been exposed to pytest already, but still very new. Since the first function returned a ~datetime.datetime~ object, it would be a great way to introduce the ~isinstance~ function. Here is where the problems started.
 
-Since we are using =input=, I had to talk about mocking and patching. I gave a short lecture on the idea of mocking and how we are going provide a values in our test so the "wait for the user to input data" part is skipped. So we headed back to our code in replit, installed pytest, and created the =test_birthday.py= module. I always forget the exact syntax, so I did a quick google search for testing multiple inputs And we started coding.
+Since we are using ~input~, I had to talk about mocking and patching. I gave a short lecture on the idea of mocking and how we are going provide a values in our test so the "wait for the user to input data" part is skipped. So we headed back to our code in replit, installed pytest, and created the ~test_birthday.py~ module. I always forget the exact syntax, so I did a quick google search for testing multiple inputs And we started coding.
 
 #+begin_src python :export code
 import datetime
@@ -164,10 +171,10 @@ def test_build_bd():
         assert actual == datetime.datetime(2000, 1, 2)
 #+end_src
 
-Beautiful right? I'm showing 12 year olds how to mock =input= in pytest. I. Am. Awesome. Full of confidence, I tell the students, "Alright everyone, head over to the shell and run pytest".
+Beautiful right? I'm showing 12 year olds how to mock ~input~ in pytest. I. Am. Awesome. Full of confidence, I tell the students, "Alright everyone, head over to the shell and run pytest".
 
 * The Problem
-Instead of that dopamine hit I get from seeing =1 passed= written in green, we got hit with this.
+Instead of that dopamine hit I get from seeing ~1 passed~ written in green, we got hit with this.
 
 #+begin_src zsh
 ======================================= ERRORS ========================================
@@ -190,18 +197,18 @@ raise OSError(
     ================================== 1 error in 0.70s ===================================
 #+end_src
 
-An =OSError=? Ok, that is interesting. Perhaps I spelled something wrong? So I went back and checked. Nope, everything looks good. Maybe, it's an import issue since we are using replit. So I tried quickly refactoring to =import birthday= instead of =from birthday import build_birthday=. Nope didn't work. Maybe, we can't mock in replit from some reason? So I copy the code, and the tests to my work computer (windows). Nope, and I get the same =OSError=.
+An ~OSError~? Ok, that is interesting. Perhaps I spelled something wrong? So I went back and checked. Nope, everything looks good. Maybe, it's an import issue since we are using replit. So I tried quickly refactoring to ~import birthday~ instead of ~from birthday import build_birthday~. Nope didn't work. Maybe, we can't mock in replit from some reason? So I copy the code, and the tests to my work computer (windows). Nope, and I get the same ~OSError~.
 
 Now, if I followed the advice in the error message and ran pytest with the =-s= flag, I could provide input in the shell, and then the test would pass. I was so confused. /Clearly/ (I thought) it had to be an issue with the way I was mocking the input.
 
 At this point I had 41 adolescents getting bored as I floundered and had no idea how to fix the issue. So I turned to the students, "Alright everyone, I'm not sure how to fix this problem I have a couple of ideas, but it might take awhile. Go ahead an work on one of our ongoing activities." 10 years of teaching has taught me to always have something students could work on at any time. Go solve some PyBites, work on brilliant.org, do some typing practice.
 
-Now, feeling embarrassed, frustrated, and still in charge of all the students I continued trying to debug. I tried use a =patch= as a decorator like I had down in previous projects. Nope, didn't work. Everything I tried manipulating in the testing module didn't work. I was stuck for the rest of the period and the day for that matter.
+Now, feeling embarrassed, frustrated, and still in charge of all the students I continued trying to debug. I tried use a ~patch~ as a decorator like I had down in previous projects. Nope, didn't work. Everything I tried manipulating in the testing module didn't work. I was stuck for the rest of the period and the day for that matter.
 
-Once I got home, I figured I would try again on my home machine (macos). So I copied the code and tests, and ran it again. I continued to get the same error. I'm frantically scouring the internet looking for clues for dealing with =OSError=. The only information I could find was on errors when trying to open and read files. Nothing really helpful with the context of testing and input. I finally gave up and took the dog for a walk.
+Once I got home, I figured I would try again on my home machine (macos). So I copied the code and tests, and ran it again. I continued to get the same error. I'm frantically scouring the internet looking for clues for dealing with ~OSError~. The only information I could find was on errors when trying to open and read files. Nothing really helpful with the context of testing and input. I finally gave up and took the dog for a walk.
 
 * Eureka
-We had started the project on a Firday. The problem happened on a Monday. Because we are on a block schedule, I didn't see the same group of students again until Wednesday. Tuesday I didn't work directly on the problem. I was +scared+ busy and didn't have time in the evening to work on in. Coming into the class on Wednesday, my plan was to skip over the testing the =build_birthday= function, and jump to the testing the =calc_days_till_next_bd= function with =isinstance=.
+We had started the project on a Friday. The problem happened on a Monday. Because we are on a block schedule, I didn't see the same group of students again until Wednesday. Tuesday I didn't work directly on the problem. I was +scared+ busy and didn't have time in the evening to work on in. Coming into the class on Wednesday, my plan was to skip over the testing the ~build_birthday~ function, and jump to the testing the ~calc_days_till_next_bd~ function with ~isinstance~.
 
 We began class with a review of the code we had already written the previous class period. This led to this exchange (I'm paraphrasing and, possibly, projecting):
 
@@ -224,7 +231,7 @@ We began class with a review of the code we had already written the previous cla
 And that's when it hit me. I had solved the problem without directly working on it.
 
 * The Solution
-You may have noticed that in the test, I wrote =from birthday import build_birthday=. While it may be tempting to think that style of importing only looks at the one function, the entire =birthday.py= file is read and executed. So when I run =pytest=, my testing module reads and executes =datetime=, =unittest=, and =birthday=. And what do the final three lines of =birthday= do?
+You may have noticed that in the test, I wrote ~from birthday import build_birthday~. While it may be tempting to think that style of importing only looks at the one function, the entire ~birthday.py~ file is read and executed. So when I run ~pytest~, my testing module reads and executes ~datetime~, ~unittest~, and ~birthday~. And what do the final three lines of ~birthday~ do?
 
 #+begin_src python :export code
 birthday = build_birthday()
@@ -232,9 +239,9 @@ paragraph = create_bd_paragraph(birthday)
 print(paragraph)
 #+end_src
 
-It calls the =build_birthday= function, including the =input= calls, as it is being imported. This is before I can actually mock it. So my tests get hung up waiting for user input that never comes.
+It calls the ~build_birthday~ function, including the ~input~ calls, as it is being imported. This is before I can actually mock it. So my tests get hung up waiting for user input that never comes.
 
-The solution was to use the if =__name__ \== "__main__"= idiom:
+The solution was to use the if ~__name__ == "___main___"~ idiom:
 
 #+begin_src python :exports both :results output
 if __name__ == "__main__":
@@ -243,7 +250,7 @@ if __name__ == "__main__":
     print(paragraph)
 #+end_src
 
-Whenever a python module is run, there is something called a global [[https://en.wikipedia.org/wiki/Symbol_table][symbol table]]. Essentially, this is a dictionary with information about the module. You can see this dictionary by calling the =globals= function and printing the return value. Let's see an example.
+Whenever a python module is run, there is something called a global [[https://en.wikipedia.org/wiki/Symbol_table][symbol table]]. Essentially, this is a dictionary with information about the module. You can see this dictionary by calling the ~globals~ function and printing the return value. Let's see an example.
 
 #+begin_src python :exports both :results output
 from pprint import pprint
@@ -264,9 +271,9 @@ pprint(globals())
  'pprint': <function pprint at 0x104bd4d60>}
 #+end_src
 
-I have imported =pprint= so that it prints each item in the dictionary on its own line. If you look at the last line, you can see =pprint= is now in the global symbol table. Also, look at the key ='__name__'= . The value is ='__main__'= . Whenever a module is run directly, for example by typing =python3 module_name= or by clicking the run button in your editor of choice, the ='__name__'= attribute is assigned the value ='__main__'= .
+I have imported ~pprint~ so that it prints each item in the dictionary on its own line. If you look at the last line, you can see ~pprint~ is now in the global symbol table. Also, look at the key ~__name__~ . The value is ~__main__~ . Whenever a module is run directly, for example by typing ~python3 module_name~ or by clicking the run button in your editor of choice, the ~__name__~ attribute is assigned the value ~__main__~ .
 
-To get the dictionary below, I have placed a =globals= function call in the =birthday.py= module and printed the return value. Now, instead of running the module directly, I ran the testing module =python test_birthday.py=. When the birthday module is imported, the global symbol table still gets printed. Note, I edited a couple things in the dictionary like the specific locations on my hard drive, and I replaced the long ="__builtins__"= value with ={...}= .
+To get the dictionary below, I have placed a ~globals~ function call in the ~birthday.py~ module and printed the return value. Now, instead of running the module directly, I ran the testing module ~python test_birthday.py~. When the birthday module is imported, the global symbol table still gets printed. Note, I edited a couple things in the dictionary like the specific locations on my hard drive, and I replaced the long ~__builtins__~ value with ~{...}~ .
 
 #+begin_src python
 {'__builtins__': {...},
@@ -284,7 +291,7 @@ To get the dictionary below, I have placed a =globals= function call in the =bir
  'pprint': <function pprint at 0x100e585e0>}
 #+end_src
 
-Notice anything? Now the ="__name__"= key is set to ="birthday"= instead of ="__main__"=. So when the =birthday.py= module is imported the =__name__= attribute matches the name of the module. So the idiom allows us to only run certain blocks of code if we are running a module directly as opposed to importing it. By moving the last three lines of =bithday.py= inside the if block, the function calls to =build_bithday= and =create_bd_paragraph= will only be execute if we are running the module directly.
+Notice anything? Now the ~"__name__"~ key is set to ~"birthday"~ instead of ~"__main__"~. So when the ~birthday.py~ module is imported the ~__name__~ attribute matches the name of the module. So the idiom allows us to only run certain blocks of code if we are running a module directly as opposed to importing it. By moving the last three lines of ~bithday.py~ inside the if block, the function calls to ~build_bithday~ and ~create_bd_paragraph~ will only be execute if we are running the module directly.
 
 * What Did I learn
 Well I'm not sure. Everything I am about to share I already /knew/.
@@ -293,4 +300,4 @@ First, despite being hilarious, [[https://rubberduckdebugging.com][rubber ducky 
 
 Second, if you believe things on the internet, it is a [[https://www.theguardian.com/lifeandstyle/2019/jul/28/its-a-superpower-how-walking-makes-us-healthier-happier-and-brainier][superpower]] to [[https://www.psychologytoday.com/us/blog/prescriptions-life/201901/taking-walk-will-boost-your-creativity-and-problem-solving#:~:text=Einstein%20walked%20on%20the%20beach,of%20their%20lives%20and%20work][walk away]] from the problem. Einstein, [[https://www.huffpost.com/entry/hemingway-thoreau-jeffers_b_3837002][Hemingway, Thoreau, and Jefferson]] all proclaim the virtues of walking as a way to clear the mind as they puzzled something out. Barbara Oakley describes two types of thinking: [[https://barbaraoakley.com/wp-content/uploads/2018/02/Learning-How-to-Learn-Excerpt.pdf][Focused and Diffused]]. Focused thinking is when you are intently focused on something. Diffused thinking occurs when your mind is relaxed and you aren't thinking about anything in particular. When trying to solve a problem, becoming hyper-focused can actually be counter productive. We can often get lost in what Boser describes as shallow features instead of taking a step back and reviewing the deep details (for a deep dive on this see [[https://barbaraoakley.com/wp-content/uploads/2018/02/Learning-How-to-Learn-Excerpt.pdf][Becoming A More Effective Learner]]). Deep details are those that contain the essence of the problem. While shallow details maybe nothing more than distractions. The act of walking---and this is important---while not actively thinking about the problem can over lead to the solution.
 
-I generally approach neuroscience research that draws conclusions based on brain scans with a healthy dose of skepticism. That being said, in my little N=1 experiment this does seem be the case. I became hyper focused on the shallow detail of the =OSError= instead of taking a step back and thinking about the problem overall. I should have outlined the problem and walked away a lot sooner. This is a hard lesson to learn. So I hope this article serves as a reminder for myself and everyone reading. Sometimes you just have to outline the problem and go walk the dog.
+I generally approach neuroscience research that draws conclusions based on brain scans with a healthy dose of skepticism. That being said, in my little N~1 experiment this does seem be the case. I became hyper focused on the shallow detail of the ~OSError~ instead of taking a step back and thinking about the problem overall. I should have outlined the problem and walked away a lot sooner. This is a hard lesson to learn. So I hope this article serves as a reminder for myself and everyone reading. Sometimes you just have to outline the problem and go walk the dog.
