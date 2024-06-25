@@ -1,0 +1,83 @@
+#+TITLE: Type Hints
+#+AUTHOR: Russell Helmstedter
+#+DATE: [2024-06-25 Tue]
+
+* Type Hints
+
+* Why?
+- integrated development environments (IDEs)
+- readability
+- thought provoking
+
+* Syntax
+#+begin_src python :exports code
+
+# For an object
+label: type_hint = value
+
+# For a function
+def func_name(parameter: type_hint, param2: type_hint2) -> return_type:
+    # function body
+    ...
+#+end_src
+
+* Data Types
+
+This works for python >= 3.10
+
+| Data Type | Python     | Type Hint Label |
+|-----------+------------+-----------------|
+| Text      | string     | str             |
+|-----------+------------+-----------------|
+| Numeric   | integer    | int             |
+|           | float      | float           |
+|-----------+------------+-----------------|
+| Sequence  | list       | list            |
+|           | tuple      | tuple           |
+|-----------+------------+-----------------|
+| Mapping   | dictionary | dict            |
+|-----------+------------+-----------------|
+| Set       | set        | set             |
+|-----------+------------+-----------------|
+| Boolean   | boolean    | bool            |
+|-----------+------------+-----------------|
+| None Type | None       | None            |
+
+* Object Examples
+#+begin_src python :exports both :results output
+age: int = 89
+numbers: list[int] = [1, 2, 3, 4, 5]
+affirmation: str = "I can do this!"
+person: dict[str, str] = {"name": "Alice", "height": "5 foot 3.5 inches"}
+#+end_src
+
+* Function Example 1
+#+begin_src python :exports both :results output
+def greet(name: str) -> str:
+    return f"Hello, {name}!"
+
+greet("Pybites")
+#+end_src
+
+#+RESULTS:
+: 'Hello, Pybites!'
+:
+
+* Function Example 2
+#+begin_src python :exports both :results output
+affirmation = "I can do this!"
+
+
+def repeater(message: str, number: int) -> None:
+    for _ in range(number):
+        print(message)
+
+
+repeater(affirmation, 3)
+#+end_src
+
+#+RESULTS:
+: I can do this!
+: I can do this!
+: I can do this!
+:
