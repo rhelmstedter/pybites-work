@@ -1,7 +1,5 @@
-
-
 # SyntaxError: This error occurs when the code is not syntactically correct.
-print("Hello, world!")
+print("Hello, world!)
 
 # TypeError: This error occurs when an operation or function is applied to an object of an inappropriate type.
 # print(5 + "five")

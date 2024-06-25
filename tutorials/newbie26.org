@@ -1,0 +1,165 @@
+#+TITLE: Reading Errors
+#+AUTHOR: Russell Helmstedter
+#+DATE: [2024-06-22 Sat]
+
+
+* Newbie Bites: Reading Errors
+
+* Types of Errors
+
+1. SyntaxError
+2. TypeError
+3. NameError
+4. IndexError
+5. KeyError
+
+* SyntaxError
+
+This error occurs when the code is not syntactically correct.
+
+* English is hard
+
+Fall magazine headline:
+
+Rachael Ray finds inspiration in cooking her family and her dog.
+
+Let's fix it:
+
+Rachael Ray finds inspiration in cooking, her family, and her dog.
+
+* Somethings come in Pairs
+
+If you open:
+
+- quotes ""
+- parentheses ()
+- brackets []
+- braces {}
+
+You have to close them.
+
+* SyntaxError Example 1
+
+#+begin_src python :results output
+print("Hello, world!)
+#+end_src
+
+#+RESULTS:
+:   File "<stdin>", line 1
+:     print("Hello, world!)
+:           ^
+: SyntaxError: unterminated string literal (detected at line 1)
+:
+
+* SyntaxError Example 2
+
+You need a colon `:` at the end of function definitions, if/else statements, and loops.
+
+#+begin_src python :results output
+if 5 < 6
+    print("Mathematically correct.")
+#+end_src
+
+#+RESULTS:
+:   File "<stdin>", line 1
+:     if 5 < 6
+:             ^
+: SyntaxError: expected ':'
+:   File "<stdin>", line 1
+:     print("Mathematically correct.")
+: IndentationError: unexpected indent
+:
+
+* SyntaxError Example 3
+
+Indentation matters! `IndentationError` is a sub-class of `SyntaxError`.
+
+#+begin_src python :results output
+while True:
+print("Hello!")
+#+end_src
+
+
+#+RESULTS:
+:   File "<stdin>", line 2
+:     print("Hello!")
+:     ^
+: IndentationError: expected an indented block after 'while' statement on line 1
+:
+
+* Data Types
+
+| Data Type | Python     | Examples           |
+|-----------+------------+--------------------|
+| Text      | string     | "hello"            |
+|-----------+------------+--------------------|
+| Numeric   | integer    | 3                  |
+|           | float      | 8.2                |
+|-----------+------------+--------------------|
+| Sequence  | list       | [1,2,3]            |
+|           | tuple      | (1,2,3)            |
+|-----------+------------+--------------------|
+| Mapping   | dictionary | {"key1": "value1"} |
+|-----------+------------+--------------------|
+| Set       | set        | {1,2,3}            |
+| Boolean   | boolean    | True               |
+
+
+* TypeError
+
+This error occurs when an operation or function is applied to an object of an inappropriate type.
+
+#+begin_src python :results output
+print(5 + "five")
+#+end_src
+
+#+RESULTS:
+: Traceback (most recent call last):
+:   File "<stdin>", line 1, in <module>
+: TypeError: unsupported operand type(s) for +: 'int' and 'str'
+:
+
+* NameError
+
+This error occurs when a local or global name is not found.
+
+#+begin_src python :results output
+print(welcome)
+#+end_src
+
+#+RESULTS:
+: Traceback (most recent call last):
+:   File "<stdin>", line 1, in <module>
+: NameError: name 'welcome' is not defined
+:
+
+* IndexError
+
+This error occurs when you try to access an index that is out of range for a list.
+
+#+begin_src python :results output
+nums = [1, 2, 3]
+print(nums[5])
+#+end_src
+
+#+RESULTS:
+: Traceback (most recent call last):
+:   File "<stdin>", line 1, in <module>
+: IndexError: list index out of range
+:
+
+* KeyError
+
+This error occurs when you try to access a key that is not present in a dictionary.
+
+#+begin_src python :results output
+# KeyError: This error occurs when you try to access a key that is not present in a dictionary.
+person = {"name": "Alice"}
+print(person["age"])
+#+end_src
+
+#+RESULTS:
+: Traceback (most recent call last):
+:   File "<stdin>", line 1, in <module>
+: KeyError: 'age'
+:
