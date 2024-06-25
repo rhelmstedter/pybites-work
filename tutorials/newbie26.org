@@ -1,7 +1,6 @@
 #+TITLE: Reading Errors
 #+AUTHOR: Russell Helmstedter
 #+DATE: [2024-06-22 Sat]
-#+PROPERTY: header-args :exports both
 
 * Newbie Bites: Reading Errors
 
@@ -40,7 +39,7 @@ You have to close them.
 
 * SyntaxError Example 1
 
-#+begin_src python :results output
+#+begin_src python :results output :exports both
 print("Hello, world!)
 #+end_src
 
@@ -55,7 +54,7 @@ print("Hello, world!)
 
 You need a colon `:` at the end of function definitions, if/else statements, and loops.
 
-#+begin_src python :results output
+#+begin_src python :results output :exports both
 if 5 < 6
     print("Mathematically correct.")
 #+end_src
@@ -74,7 +73,7 @@ if 5 < 6
 
 Indentation matters! `IndentationError` is a sub-class of `SyntaxError`.
 
-#+begin_src python :results output
+#+begin_src python :results output :exports both
 for _ in range(5):
 print("Hello!")
 #+end_src
@@ -110,7 +109,7 @@ print("Hello!")
 
 This error occurs when an operation or function is applied to an object of an inappropriate type.
 
-#+begin_src python :results output
+#+begin_src python :results output :exports both
 print(5 + "five")
 #+end_src
 
@@ -124,7 +123,7 @@ print(5 + "five")
 
 This error occurs when a local or global name is not found.
 
-#+begin_src python :results output
+#+begin_src python :results output :exports both
 print(welcome)
 #+end_src
 
@@ -138,7 +137,7 @@ print(welcome)
 
 This error occurs when you try to access an index that is out of range for a list.
 
-#+begin_src python :results output
+#+begin_src python :results output :exports both
 nums = [1, 2, 3]
 print(nums[5])
 #+end_src
@@ -153,7 +152,7 @@ print(nums[5])
 
 This error occurs when you try to access a key that is not present in a dictionary.
 
-#+begin_src python :results output
+#+begin_src python :results output :exports both
 person = {"name": "Alice"}
 print(person["age"])
 #+end_src
