@@ -1,6 +1,7 @@
 #+TITLE: Reading Errors
 #+AUTHOR: Russell Helmstedter
 #+DATE: [2024-06-22 Sat]
+#+OPTIONS: :exports both
 
 
 * Newbie Bites: Reading Errors
@@ -75,16 +76,18 @@ if 5 < 6
 Indentation matters! `IndentationError` is a sub-class of `SyntaxError`.
 
 #+begin_src python :results output
-while True:
-print("Hello!")
+for _ in range(5):
+        print("Hello!")
 #+end_src
 
 
 #+RESULTS:
-:   File "<stdin>", line 2
-:     print("Hello!")
-:     ^
-: IndentationError: expected an indented block after 'while' statement on line 1
+:
+: Hello!
+: Hello!
+: Hello!
+: Hello!
+: Hello!
 :
 
 * Data Types
@@ -110,13 +113,11 @@ print("Hello!")
 This error occurs when an operation or function is applied to an object of an inappropriate type.
 
 #+begin_src python :results output
-print(5 + "five")
+print("5" + "five")
 #+end_src
 
 #+RESULTS:
-: Traceback (most recent call last):
-:   File "<stdin>", line 1, in <module>
-: TypeError: unsupported operand type(s) for +: 'int' and 'str'
+: 5five
 :
 
 * NameError
@@ -124,13 +125,12 @@ print(5 + "five")
 This error occurs when a local or global name is not found.
 
 #+begin_src python :results output
+welcome = "Welcome to the newbies part 2!"
 print(welcome)
 #+end_src
 
 #+RESULTS:
-: Traceback (most recent call last):
-:   File "<stdin>", line 1, in <module>
-: NameError: name 'welcome' is not defined
+: Welcome to the newbies part 2!
 :
 
 * IndexError
@@ -139,13 +139,11 @@ This error occurs when you try to access an index that is out of range for a lis
 
 #+begin_src python :results output
 nums = [1, 2, 3]
-print(nums[5])
+print(nums[2])
 #+end_src
 
 #+RESULTS:
-: Traceback (most recent call last):
-:   File "<stdin>", line 1, in <module>
-: IndexError: list index out of range
+: 3
 :
 
 * KeyError
@@ -154,12 +152,10 @@ This error occurs when you try to access a key that is not present in a dictiona
 
 #+begin_src python :results output
 # KeyError: This error occurs when you try to access a key that is not present in a dictionary.
-person = {"name": "Alice"}
+person = {"name": "Alice", "age": 23}
 print(person["age"])
 #+end_src
 
 #+RESULTS:
-: Traceback (most recent call last):
-:   File "<stdin>", line 1, in <module>
-: KeyError: 'age'
+: 23
 :
