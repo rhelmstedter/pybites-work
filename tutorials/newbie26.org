@@ -75,19 +75,17 @@ if 5 < 6
 
 Indentation matters! `IndentationError` is a sub-class of `SyntaxError`.
 
-#+begin_src python :results output
+#+begin_src python :results output :exports both
 for _ in range(5):
-        print("Hello!")
+print("Hello!")
 #+end_src
 
 
 #+RESULTS:
-:
-: Hello!
-: Hello!
-: Hello!
-: Hello!
-: Hello!
+:   File "<stdin>", line 2
+:     print("Hello!")
+:     ^
+: IndentationError: expected an indented block after 'for' statement on line 1
 :
 
 * Data Types
@@ -113,11 +111,13 @@ for _ in range(5):
 This error occurs when an operation or function is applied to an object of an inappropriate type.
 
 #+begin_src python :results output
-print("5" + "five")
+print(5 + "five")
 #+end_src
 
 #+RESULTS:
-: 5five
+: Traceback (most recent call last):
+:   File "<stdin>", line 1, in <module>
+: TypeError: unsupported operand type(s) for +: 'int' and 'str'
 :
 
 * NameError
@@ -125,12 +125,13 @@ print("5" + "five")
 This error occurs when a local or global name is not found.
 
 #+begin_src python :results output
-welcome = "Welcome to the newbies part 2!"
 print(welcome)
 #+end_src
 
 #+RESULTS:
-: Welcome to the newbies part 2!
+: Traceback (most recent call last):
+:   File "<stdin>", line 1, in <module>
+: NameError: name 'welcome' is not defined
 :
 
 * IndexError
@@ -139,11 +140,13 @@ This error occurs when you try to access an index that is out of range for a lis
 
 #+begin_src python :results output
 nums = [1, 2, 3]
-print(nums[2])
+print(nums[5])
 #+end_src
 
 #+RESULTS:
-: 3
+: Traceback (most recent call last):
+:   File "<stdin>", line 1, in <module>
+: IndexError: list index out of range
 :
 
 * KeyError
@@ -151,11 +154,12 @@ print(nums[2])
 This error occurs when you try to access a key that is not present in a dictionary.
 
 #+begin_src python :results output
-# KeyError: This error occurs when you try to access a key that is not present in a dictionary.
-person = {"name": "Alice", "age": 23}
+person = {"name": "Alice"}
 print(person["age"])
 #+end_src
 
 #+RESULTS:
-: 23
+: Traceback (most recent call last):
+:   File "<stdin>", line 1, in <module>
+: KeyError: 'age'
 :
