@@ -1,0 +1,62 @@
+#+TITLE: Word Count
+#+AUTHOR: Russell Helmstedter
+#+DATE: [2024-06-27 Thu]
+
+* Word Count
+* Tools you'll use
+- ~.split()~
+- ~.splitlines()~
+- ~len()~
+
+
+* What is a method?
+Methods are functions that are connected to certain types.
+
+Back in Newbie 08:
+
+- ~.lower()~
+- ~.upper()~
+- ~.title()~
+
+* Understanding ~.split()~
+ #+begin_src python :exports both :results output
+text: str = "Hello, world!\nThis is getting longer."
+print(text)
+words: list = text.split()
+print(words)
+ #+end_src
+
+ #+RESULTS:
+ : Hello, world!
+ : This is getting longer.
+ : ['Hello,', 'world!', 'This', 'is', 'getting', 'longer.']
+ :
+
+* Understanding ~.splitlines()~
+ #+begin_src python :exports both :results output
+text = """Line one.
+Line two.
+Line three."""
+print(text)
+lines = text.splitlines()
+print(lines)
+ #+end_src
+
+ #+RESULTS:
+ : Line one.
+ : Line two.
+ : Line three.
+ : ['Line one.', 'Line two.', 'Line three.']
+ :
+
+* Understanding ~len()~
+ #+begin_src python :exports both :results output
+text = "Hello, world!"
+words = text.split()
+numbers = [0, 1, 2, 3, 4]
+print(len(numbers))
+ #+end_src
+
+ #+RESULTS:
+ : 5
+ :

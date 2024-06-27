@@ -1,0 +1,58 @@
+#+TITLE: Default Arguments
+#+AUTHOR: Russell Helmstedter
+#+DATE: [2024-06-26 Wed]
+
+* Default Arguments
+
+* Why?
+- Function that has a common argument
+- Less typing overall
+
+* With No Default Argument
+  #+begin_src python :exports both :results output
+def greet(name):
+    return f"Hello, {name}!"
+
+
+print(greet("Bob"))
+  #+end_src
+
+  #+RESULTS:
+  : Hello, Bob!
+  :
+
+* Example 1
+  #+begin_src python :exports both :results output
+def greet(name: str="World") -> str:
+    return f"Hello, {name}!"
+
+
+print(greet())
+print(greet("Bob"))
+  #+end_src
+
+  #+RESULTS:
+  : Hello, World!
+  : Hello, Bob!
+  :
+
+* Example 2
+#+begin_src python :exports both :results output
+
+# Newbie 19
+def speed_check(speed=90):
+    if speed > 100:
+        print('Please slow down.')
+    elif speed < 80:
+        print('Please speed up.')
+    else:
+        print('Thanks for driving safely!')
+
+
+print(speed_check())
+#+end_src
+
+#+RESULTS:
+: Thanks for driving safely!
+: None
+:

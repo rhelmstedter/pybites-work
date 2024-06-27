@@ -1,0 +1,30 @@
+#+TITLE: Special Characters
+#+AUTHOR: Russell Helmstedter
+#+DATE: [2024-06-27 Thu]
+
+* Special Characters
+* Special Characters
+- "\n" represents a newline
+- "\t" represents a tab
+
+* Example 1
+#+begin_src python :exports both :results output
+text = "Hello,\n\tWelcome to Python programming!"
+print(text)
+#+end_src
+
+#+RESULTS:
+: Hello,
+: 	Welcome to Python programming!
+:
+
+* Example 2
+#+begin_src python :exports both :results output
+numbers = [1, 2, 3, 4, 5]
+for num in numbers:
+    print(num, end='\t')
+#+end_src
+
+#+RESULTS:
+:
+: 1	2	3	4	5
