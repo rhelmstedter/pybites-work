@@ -1,0 +1,43 @@
+#+title: Dictionary Retrieval - Part 2
+#+author: Russell Helmstedter
+#+date:[2024-06-28 Fri]
+
+* Dictionary Retrieval
+
+* Newbie 13
+We learned about dictionary methods.
+
+- ~.keys()~
+- ~.values()~
+- ~.items()~
+
+#+begin_src python :exports both :results output
+cars = {'Mazda': 2019, 'Nissan': 1997, 'Holden': 2005, 'McLaren': 2011}
+cars.items()
+#+end_src
+
+#+RESULTS:
+: dict_items([('Mazda', 2019), ('Nissan', 1997), ('Holden', 2005), ('McLaren', 2011)])
+:
+
+* Getting Information from the dictionary
+#+begin_src python :exports both :results output
+cars = {'Mazda': 2019, 'Nissan': 1997, 'Holden': 2005, 'McLaren': 2011}
+cars["nissan"]
+#+end_src
+
+#+RESULTS:
+: Traceback (most recent call last):
+:   File "<stdin>", line 1, in <module>
+: KeyError: 'nissan'
+:
+
+* Example 2
+#+begin_src python :exports both :results output
+person = {"name": "Alice", "job": "teacher"}
+f'{person["name"]} works as a {person["job"]}'
+#+end_src
+
+#+RESULTS:
+: 'Alice works as a teacher'
+:

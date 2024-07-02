@@ -1,0 +1,51 @@
+#+title: Dictionary Retrieval - Part 3
+#+author: Russell Helmstedter
+#+date:[2024-06-28 Fri]
+
+* Dictionary Retrieval Part 3
+
+* Another Dictionary Method
+- ~.get()~
+
+* Using ~.get()~
+#+begin_src python :exports both :results output
+cars = {'Mazda': 2019, 'Nissan': 1997, 'Holden': 2005, 'McLaren': 2011}
+print(cars.get("Mazda"))
+#+end_src
+
+#+RESULTS:
+: 2019
+:
+
+* Handling Missing Keys
+#+begin_src python :results output
+cars = {'Mazda': 2019, 'Nissan': 1997, 'Holden': 2005, 'McLaren': 2011}
+
+
+def get_car_info(car: str) -> str:
+    year = cars.get(car)
+    if year is None:
+        return f"You don't own a {car}"
+    else:
+        return f"Your {car} is a {year} model"
+
+
+print(get_car_info("Ford"))
+
+#+end_src
+
+#+RESULTS:
+: You don't own a Ford
+:
+
+* Handling Missing with Default Value
+
+#+begin_src python :exports both :results output
+cars = {'Mazda': 2019, 'Nissan': 1997, 'Holden': 2005, 'McLaren': 2011}
+
+print(cars.get("Ford", "Car does not exist."))
+#+end_src
+
+#+RESULTS:
+: Car does not exist.
+:

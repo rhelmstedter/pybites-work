@@ -1,0 +1,39 @@
+#+title: Random Module
+#+author: Russell Helmstedter
+#+date:[2024-07-01 Mon]
+
+* Modules
+
+* What Is A Module?
+A module is just a python file.
+In python 3.10 there are 354 built-in modules.
+
+
+* Why?
+1. Use code someone else has written.
+2. When your project is getting big.
+
+* How?
+Built-in ~import~ statement.
+Creates a module object in memory.
+
+#+begin_src python :exports both :results output
+import module_name
+
+module_name.object_you_want_to_use
+#+end_src
+
+* The ~random~ Module
+#+begin_src python :exports both :results output
+import random
+
+help(random.randint)
+#+end_src
+
+* Example 1
+#+begin_src python :exports both :results output
+import random
+
+number = random.randint(50, 100)
+print(number)
+#+end_src
