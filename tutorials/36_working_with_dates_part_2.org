@@ -1,0 +1,68 @@
+#+title: Working With Dates
+#+author: Russell Helmstedter
+#+date:[2024-07-03 Wed]
+
+* Working with Dates Part 2
+
+* Import Styles
+
+ #+begin_src python :exports both :results output
+import module
+ #+end_src
+
+ #+begin_src python :exports both :results output
+from module import object
+ #+end_src
+
+* Import the entire module
+#+begin_src python :exports both :results output
+
+import datetime
+
+my_date = datetime.date(2023, 5, 24)
+print(my_date)
+#+end_src
+
+* Importing a Specific Object
+ #+begin_src python :exports both :results output
+from datetime import date
+
+my_date = date(2023, 5, 24)
+print(my_date)
+ #+end_src
+
+ #+RESULTS:
+ : 2023-05-24
+ :
+
+* When to Import Everything
+- You are using lots of objects from a module.
+- You want a clean namespace.
+* Example 1
+ #+begin_src python :exports both :results output
+import datetime
+
+date = "May 24, 2023"
+my_date = datetime.date(2023, 5, 24)
+print(date)
+print(my_date)
+ #+end_src
+
+ #+RESULTS:
+ : May 24, 2023
+ : 2023-05-24
+ :
+
+
+* What not to do
+ #+begin_src python :exports both :results output
+from datetime import date
+
+date_string = "May 24, 2023"
+my_date = date(2023, 5, 24)
+print(my_date)
+ #+end_src
+
+ #+RESULTS:
+ : 2023-05-24
+ :

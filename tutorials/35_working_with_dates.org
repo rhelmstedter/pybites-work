@@ -1,0 +1,47 @@
+#+title: Working With Dates
+#+author: Russell Helmstedter
+#+date:[2024-07-03 Wed]
+
+* Working with Dates
+
+* Datetime Module
+
+ #+begin_src python :exports both :results output
+import datetime
+
+dir(datetime.date)
+ #+end_src
+
+
+* Working with Date Objects
+
+ #+begin_src python :exports both :results output
+import datetime
+
+my_date = datetime.date(2023, 5, 24)
+print(my_date)
+ #+end_src
+
+* Attributes vs Methods
+
+ #+begin_src python :exports both :results output
+import datetime
+
+my_birthday = datetime.date(1986, 5, 19)
+print(my_birthday.weekday())
+ #+end_src
+
+ #+RESULTS:
+ : 0
+ :
+
+* Weekday Table
+| Weekday Number | Day         |
+|----------------+-------------|
+|              0 | "Monday"    |
+|              1 | "Tuesday"   |
+|              2 | "Wednesday" |
+|              3 | "Thursday"  |
+|              4 | "Friday"    |
+|              5 | "Saturday"  |
+|              6 | "Sunday"    |

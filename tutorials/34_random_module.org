@@ -6,8 +6,15 @@
 
 * What Is A Module?
 A module is just a python file.
-In python 3.10 there are 354 built-in modules.
+Python 3.10.4 has 308 built-in modules [fn:1].
 
+
+
+
+
+
+---
+[fn:1] Maybe... It depends on your distribution.
 
 * Why?
 1. Use code someone else has written.
