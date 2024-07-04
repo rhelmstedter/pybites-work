@@ -1,0 +1,13 @@
+#+title: Bio
+#+author: Russell Helmstedter
+#+date:[2024-07-03 Wed]
+
+* Bio
+Location: California, USA
+Role: Coach
+
+Russell Helmstedter has been a middle school math teacher in since 2014. In 2020, he began learning python with the intention of bringing it into his classroom. The following school year, the computer science teacher move, and Russell took over the position.
+
+Originally, Russell reached out to PyBites in 2021 for his students, but liked it so much he started creating screencasts for the newbie bites, worked with Bob to create an additional 25 newbie bites, and became a coach in 2024.
+
+Outside of teaching and coding, Russell enjoys cooking, listening to good music, and swinging the occasional kettlebell.
