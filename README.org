@@ -1,3 +1,5 @@
-# pybites-work
+#+title: pybites-work
+#+author: Russell Helmstedter
+
 
 This is where I save the work I have done for PyBites.
