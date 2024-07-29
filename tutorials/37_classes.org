@@ -1,0 +1,182 @@
+#+title: Make a Class
+#+author: Russell Helmstedter
+#+date: [2024-07-09 Tue]
+
+* Make A Class
+
+* Why?
+- Create custom objects that fit what you need.
+- Create multiple objects that have share attributes but have different details.
+
+* Why?
+- Create custom objects that fit what you need.
+- Create multiple objects that have share attributes but have different details.
+
+  #+begin_src python :exports both :results output
+from datetime import date
+
+todays_date = date(2023, 7, 9)
+todays_date.year
+todays_date.month
+todays_date.day
+todays_date.weekday()
+  #+end_src
+
+* Example Class
+What makes a circle? The radius!
+
+* Making a class
+#+begin_src python :exports both :results output
+class Circle:
+    def __init__(self, radius):
+        self.radius = radius
+#+end_src
+
+* Using the Class
+#+begin_src python :exports both :results output
+class Circle:
+    def __init__(self, radius):
+        self.radius = radius
+
+
+my_circle = Circle(3)
+print(my_circle.radius)
+#+end_src
+
+#+RESULTS:
+: 3
+:
+
+* Using the Class
+#+begin_src python :exports both :results output
+class Circle:
+    def __init__(self, radius):
+        self.radius = radius
+
+
+my_circle = Circle(3)
+print(my_circle.radius)
+
+my_little_circle = Circle(1)
+print(my_little_circle.radius)
+#+end_src
+
+#+RESULTS:
+: 3
+: 1
+:
+
+* Doing some Calculations
+[[./circle_notes.jpg]]
+
+* Doing some Calculations
+#+begin_src python :exports both :results output
+
+class Circle:
+    def __init__(self, radius):
+        self.radius = radius
+
+
+my_circle = Circle(3)
+area = 3.14159 * my_circle.radius ** 2
+print(area)
+#+end_src
+
+#+RESULTS:
+: 28.27431
+:
+
+* Doing some Calculations
+#+begin_src python :exports both :results output
+
+class Circle:
+    def __init__(self, radius):
+        self.radius = radius
+
+
+my_circle = Circle(3)
+area = 3.14159 * my_circle.radius ** 2
+print(area)
+
+my_little_circle = Circle(1)
+little_area = 3.14159 * my_little_circle.radius ** 2
+print(little_area)
+#+end_src
+
+* Create the ~.calc_area()~ Method
+#+begin_src python :exports both :results output
+
+class Circle:
+    def __init__(self, radius):
+        self.radius = radius
+
+    def calc_area(self):
+        return 3.14159 * self.radius ** 2
+
+
+my_circle = Circle(3)
+print(my_circle.calc_area())
+#+end_src
+
+#+RESULTS:
+: 28.27431
+:
+
+* Create the ~.calc_circumference()~ Method
+#+begin_src python :exports both :results output
+class Circle:
+    def __init__(self, radius):
+        self.radius = radius
+
+    def calc_area(self):
+        return 3.14159 * self.radius ** 2
+
+    def calc_circumference(self):
+        return 2 * 3.14159 * self.radius
+#+end_src
+
+* Using the Methods
+#+begin_src python :exports both :results output
+class Circle:
+    def __init__(self, radius):
+        self.radius = radius
+
+    def calc_area(self):
+        return 3.14159 * self.radius ** 2
+
+    def calc_circumference(self):
+        return 2 * 3.14159 * self.radius
+
+my_circle = Circle(3)
+
+print(my_circle.calc_area())
+print(my_circle.calc_circumference())
+
+#+end_src
+
+#+RESULTS:
+: 28.27431
+: 18.849539999999998
+:
+
+* Using the Methods
+#+begin_src python :exports both :results output
+class Circle:
+    def __init__(self, radius):
+        self.radius = radius
+
+    def calc_area(self):
+        return 3.14159 * self.radius ** 2
+
+    def calc_circumference(self):
+        return 2 * 3.14159 * self.radius
+
+my_circle = Circle(3)
+
+print(my_circle.calc_area())
+print(my_circle.calc_circumference())
+
+my_little_circle = Circle(1)
+print(my_little_circle.calc_area())
+print(my_little_circle.calc_circumference())
+#+end_src

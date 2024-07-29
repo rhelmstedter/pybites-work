@@ -1,0 +1,113 @@
+#+title: Dataclasses
+#+author: Russell Helmstedter
+#+date: [2024-07-12 Fri]
+
+* Dataclasses
+
+* Additional Methods
+- ~__eq__~
+- ~__lt__~
+- ~__repr__~
+
+* Revisiting ~Circle~
+#+begin_src python :exports both :results output
+class Circle:
+    def __init__(self, radius):
+        self.radius = radius
+
+    def __str__(self):
+        return f"A circle with a radius of {self.radius}."
+
+    def __repr__(self):
+        return f"Circle(radius={self.radius})"
+
+
+my_circle = Circle(3)
+print(repr(my_circle))
+#+end_src
+
+#+RESULTS:
+: Circle(radius=3)
+:
+
+* Convert to a ~dataclass~
+#+begin_src python :exports both :results output
+from dataclasses import dataclass
+
+@dataclass
+class Circle:
+    radius: float
+
+
+my_circle = Circle(3)
+print(my_circle)
+#+end_src
+
+#+RESULTS:
+: Circle(radius=3)
+:
+
+* Final ~dataclass~
+#+begin_src python :exports both :results output
+from dataclasses import dataclass
+
+@dataclass
+class Circle:
+    radius: float
+    
+    def calc_area(self):
+        return 3.14159 * self.radius**2
+    
+    def calc_circumference(self):
+        return 2 * 3.14159 * self.radius
+    
+    def __str__(self):
+        return f"A circle with a radius of {self.radius}."
+
+
+my_circle = Circle(3)
+print(my_circle)
+print(my_circle.__repr__())
+#+end_src
+
+#+RESULTS:
+: A circle with a radius of 3.
+: Circle(radius=3)
+:
+
+* The Point Class
+
+#+begin_src python :exports both :results output
+class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+    
+    def __repr__(self):
+        return f"Point(x={self.x}, y={self.y})"
+
+
+my_point = Point(2, 4)
+print(my_point)
+#+end_src
+
+#+RESULTS:
+: Point(x=2, y=4)
+:
+
+* Point as a dataclass
+#+begin_src python :exports both :results output
+from dataclasses import dataclass
+
+@dataclass
+class Point:
+    x: int
+    y: int
+
+my_point = Point(2, 4)
+print(my_point)
+#+end_src
+
+#+RESULTS:
+: Point(x=2, y=4)
+:

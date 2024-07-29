@@ -1,0 +1,169 @@
+#+title: String Manipulations
+#+author: Russell Helmstedter
+#+date:[2024-07-19 Fri]
+
+* String Manipulations
+* Immutable Objects
+#+begin_quote
+*Immutable*: An object with fixed value. Immutable objects include numbers, strings and tuples.
+#+end_quote
+* Keeping the Original
+#+begin_src python :exports both :results output
+text = "Learning Python is fun and engaging!"
+lowercase_text = text.lower()
+print(text)
+print(lowercase_text)
+#+end_src
+
+#+RESULTS:
+: Learning Python is fun and engaging!
+: learning python is fun and engaging!
+:
+
+* Reusing the Label
+#+begin_src python :exports both :results output
+text = "Learning Python is fun and engaging!"
+text = text.lower()
+print(text)
+#+end_src
+
+#+RESULTS:
+: learning python is fun and engaging!
+:
+
+* Why?
+#+begin_src python :exports both :results output
+confirm = input("Do you want to continue?")
+if confirm == "yes":
+    print("Let's move on")
+else:
+    print("OK, quitting now.")
+#+end_src
+
+* Case Matters
+#+begin_src python :exports both :results output
+print("Yes".lower() == "yes")
+#+end_src
+
+#+RESULTS:
+: True
+:
+
+* Using ~.lower~
+*Option 1*
+#+begin_src python :exports both :results output
+confirm = input("Do you want to continue?")
+if confirm.lower() == "yes":
+    print("Let's move on")
+else:
+    print("OK, quitting now.")
+#+end_src
+
+*Option 2*
+#+begin_src python :exports both :results output
+confirm = input("Do you want to continue?").lower()
+if confirm == "yes":
+    print("Let's move on")
+else:
+    print("OK, quitting now.")
+#+end_src
+
+* Removing Characters
+#+begin_src python :exports both :results output
+text = "xxxxhelloxxxx"
+stripped_text = text.strip("x")
+print(stripped_text)
+#+end_src
+
+#+RESULTS:
+: hello
+:
+
+* Only If Character Are At The Ends
+#+begin_src python :exports both :results output
+text = "xxxxhelloxxxx!"
+stripped_text = text.strip("x")
+print(stripped_text)
+#+end_src
+
+#+RESULTS:
+: helloxxxx!
+:
+
+* Stripping Multiple Characters
+#+begin_src python :exports both :results output
+text = "xxxxhelloxxxx!"
+stripped_text = text.strip("!x")
+print(stripped_text)
+#+end_src
+
+#+RESULTS:
+: hello
+:
+
+* `.lstrip` Example
+#+begin_src python :exports both :results output
+text = "xxxxhelloxxxx"
+stripped_text = text.lstrip("x")
+print(stripped_text)
+#+end_src
+
+#+RESULTS:
+: helloxxxx
+:
+
+* `.rstrip` Example
+#+begin_src python :exports both :results output
+text = "xxxxhelloxxxx"
+stripped_text = text.rstrip("x")
+print(stripped_text)
+#+end_src
+
+#+RESULTS:
+: xxxxhello
+:
+
+* Why Strip?
+#+begin_src python :exports both :results output
+confirm = input("Do you want to continue?").lower()
+confirm = confirm.strip(".?!")
+if confirm == "yes":
+    print("Let's move on")
+else:
+    print("OK, quitting now.")
+#+end_src
+* Chaining
+#+begin_src python :exports both :results output
+confirm = input("Do you want to continue?").lower().strip(".?!")
+if confirm == "yes":
+    print("Let's move on")
+else:
+    print("OK, quitting now.")
+#+end_src
+
+* Getting The Words
+#+begin_src python :exports both :results output
+text = "Learning Python is fun and engaging!"
+words = text.rstrip("!").split()
+print(words)
+#+end_src
+
+#+RESULTS:
+: ['Learning', 'Python', 'is', 'fun', 'and', 'engaging']
+:
+
+* Why?
+#+begin_src python :exports both :results output
+text = "Learning Python is fun and engaging!"
+words = text.lower().rstrip("!").split()
+
+second_word = words[1]
+last_word = words[-1]
+print(f"{second_word} has {len(second_word)} letters.")
+print(f"{last_word} has {len(last_word)} letters.")
+#+end_src
+
+#+RESULTS:
+: python has 6 letters.
+: engaging has 8 letters.
+:

@@ -1,0 +1,90 @@
+#+title: Scope
+#+author: Russell Helmstedter
+#+date: [2024-07-12 Fri]
+
+* Scope
+
+* Global Scope
+#+begin_src python :exports both :results output
+message = "Hello from the global scope."
+#+end_src
+
+* From Global To Local Is OK
+#+begin_src python :exports both :results output
+message = "Hello from the global scope."
+
+def message_printer():
+    print(message)
+
+
+message_printer()
+#+end_src
+
+#+RESULTS:
+: Hello from the global scope.
+:
+
+* Local Scope
+#+begin_src python :exports both :results output
+def message_printer():
+    message = "Hello from the local scope."
+    print(message)
+
+
+message_printer()
+#+end_src
+
+#+RESULTS:
+: Hello from the local scope.
+:
+
+* Local To Global Is Not OK
+#+begin_src python :exports both :results output
+def message_printer():
+    message = "Hello from the local scope."
+    print(message)
+
+message_printer()
+#+end_src
+
+#+RESULTS:
+: Hello from the local scope.
+:
+
+* A Solution
+#+begin_src python :exports both :results output
+def message_creator():
+    local_message = "This string was assigned to a local variable that will get passed to the global scope."
+    return local_message
+
+message = message_creator()
+print(message)
+#+end_src
+
+#+RESULTS:
+: This string was assigned to a local variable that will get passed to the global scope.
+:
+
+* Shadowing
+#+begin_src python :exports both :results output
+message = "Hello from the global scope."
+
+def local_scope_example():
+    message = "Hello from the local scope."
+    return message
+
+
+def global_scope_example():
+    global message
+    return message
+
+print(local_scope_example())
+print()
+print(global_scope_example())
+#+end_src
+
+#+RESULTS:
+: Hello from the local scope.
+:
+: Hello from the global scope.
+:
